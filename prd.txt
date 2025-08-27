@@ -1,0 +1,148 @@
+
+MINDLOG - 감정 일기 웹앱 PRD (Product Requirements Document)
+
+프로젝트 개요
+
+제품명: MINDLOG
+
+목적: 사용자가 일상의 감정을 체계적으로 기록하고 관리할 수 있는 감정 일기 웹앱
+
+대상: 감정 관리와 자기 성찰에 관심이 있는 개인 사용자
+
+기술 스택
+
+풀스택 프레임워크: React Router v7 (SSR/SPA 하이브리드)
+
+Frontend: React 19, TypeScript
+
+Backend: React Router 서버 사이드 렌더링 + API 라우트
+
+Runtime: Node.js
+
+Database: Supabase + Drizzle ORM
+
+Authentication: 소셜 로그인 (OAuth) via Supabase Auth
+
+Storage: Supabase Storage (이미지 업로드용)
+
+UI 컴포넌트: shadcn/ui + Radix UI
+
+Styling: TailwindCSS
+
+Notifications: 웹 푸시 알림 (Service Workers)
+
+Deployment: Vercel/Netlify (React Router 지원 플랫폼)
+
+핵심 기능
+
+1. 사용자 관리 (app/features/users/)
+
+소셜 로그인: OAuth를 통한 간편 로그인 (Google, GitHub, Discord 등)
+
+프로필 관리: 아바타, 이름, 사용자명, 이메일 관리
+
+권한 시스템: admin/user 역할 구분
+
+개인 데이터 소유: 사용자는 자신의 데이터만 접근 가능
+
+2. 감정 일기 (app/features/diaries/)
+
+일기 입력 항목:
+
+날짜: 일기 작성 날짜 (date)
+
+주요 감정 (mainEmotions): 그날 느낀 주요 감정들 (다중 선택/입력 가능). 새로운 감정 입력 시 자동으로 개인 태그로 등록됨.
+
+상황: 감정을 유발한 상황 설명 (situation)
+
+반응: 그 감정에 대한 실제 반응 (reaction)
+
+신체 감각: 감정과 함께 느낀 신체적 감각 (physicalSensation)
+
+원하는 반응: 앞으로 원하는 반응 방식 (desiredReaction)
+
+감사한 순간: 하루 중 감사했던 순간 (gratitudeMoment)
+
+자기 위로의 말: 자신에게 하고 싶은 따뜻한 말 (selfKindWords)
+
+이미지 첨부: 그날의 감정과 관련된 이미지 업로드 (선택사항)
+
+일기 관리 기능:
+
+일기 작성: 일일 감정 기록 생성 (이미지 포함)
+
+일기 수정: 기존 일기 내용 편집
+
+일기 조회: 날짜별, 감정별, 태그별 일기 검색 및 필터링
+
+일기 삭제: 개인 일기 삭제 (소프트 삭제)
+
+일기 통계: 개인 감정 패턴 분석 및 시각화
+
+3. 자동화된 감정 태그 시스템 (app/features/emotion-tags/)
+
+태그 생성 및 관리:
+
+자동 태그 등록: 일기 작성 시 '주요 감정' 필드에 새로운 감정을 입력하면, 해당 감정이 자동으로 사용자의 개인 태그 목록에 추가됨.
+
+태그 편집: 사용자는 설정 페이지에서 자신의 태그 목록(이름, 색상, 아이콘 등)을 편집할 수 있음.
+
+태그 삭제: 사용하지 않는 태그 제거 (사용 중인 태그는 경고)
+
+태그 카테고리: 긍정/부정/중성 감정으로 자동 분류
+
+태그 사용 및 분석:
+
+간편한 감정 선택: 일기 작성 시, 시스템 기본 태그와 사용자가 등록한 모든 태그가 선택지로 제공되어 클릭만으로 쉽게 추가 가능.
+
+태그 빈도 분석: 가장 자주 사용하는 감정 태그 통계
+
+감정 패턴 추적: 태그 기반 감정 변화 추이 분석
+
+태그 기반 검색: 특정 태그로 일기 필터링 및 검색
+
+4. 알림 설정 (app/features/notifications/)
+
+웹 푸시 알림, 맞춤 시간 설정, 내용 커스터마이징, 스마트 알림, ON/OFF 기능
+
+사용자 여정
+
+신규 사용자: 온보딩 > 프로필 설정 > 첫 일기 작성 > 알림 설정
+
+기존 사용자: 일기 작성 > 감정 분석 > 태그 관리 > 회고 > 데이터 내보내기
+
+기술적 구현 사항
+
+데이터베이스 구조: (SQL 구문 생략) profiles, emotionTags, diaries, diaryTags, notificationSettings 테이블로 구성됨.
+
+프로젝트 구조: (폴더 구조 생략) app/routes, app/features, app/lib, app/components, app/styles 등으로 구성됨.
+
+보안 정책: RLS, JWT 토큰, HTTPS, 데이터 검증, Rate Limiting, 소프트 삭제, shadcn/ui 활용
+
+향후 확장 계획
+
+Phase 1 (MVP): 소셜 로그인, 기본 일기 작성/조회, 이미지 업로드, 자동 태그 시스템, 푸시 알림, 반응형 디자인
+
+Phase 2 (분석/시각화): 감정 패턴 시각화, 통계 대시보드, 변화 추이 그래프, 리포트 생성
+
+Phase 3 (고급 기능): AI 분석, 패턴 예측, 데이터 내보내기/가져오기, 다크 모드, PWA
+
+Phase 4 (소셜 기능): 익명 커뮤니티, 전문가 상담 연결, 그룹 관리
+
+성공 지표 (KPI)
+
+사용자 참여도: 일기 작성 빈도, 태그 사용률, 세션 지속 시간
+
+사용자 유지율: 온보딩 완료율, 리텐션율, MAU
+
+기능 사용률: 알림 활성화율, 신규 태그 생성률, 분석 페이지 조회율
+
+사용자 만족도: 피드백 점수, 기술 안정성, 접근성 점수
+
+업데이트 로그
+
+v1.4: 이미지 업로드 기능 추가 (Supabase Storage), diaries 테이블에 imageUrl 컬럼 추가, 관련 계획 반영
+
+v1.3: '주요 감정' 다중 입력 및 자동 태그 등록 시스템으로 변경, '감정 강도' 필드 제거
+
+v1.2: shadcn/ui 기술 스택 추가, DB 코멘트 추가, 인덱스 추가 등

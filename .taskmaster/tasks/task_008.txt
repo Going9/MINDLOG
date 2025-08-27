@@ -1,0 +1,11 @@
+# Task ID: 8
+# Title: 사용자 프로필 및 설정 관리 생성
+# Status: pending
+# Dependencies: 3, 4
+# Priority: medium
+# Description: 사용자 프로필 관리 및 애플리케이션 설정 인터페이스 구축
+# Details:
+Create profile editing interface (avatar, name, username, email). Implement avatar upload using Supabase Storage. Build settings page for tag management, privacy preferences, and account settings. Create user role management (admin/user). Implement data export functionality. Add account deletion with data cleanup. Create settings persistence and synchronization.
+
+# Test Strategy:
+Test profile updates, verify avatar upload, validate settings persistence, and ensure proper data cleanup on account deletion.

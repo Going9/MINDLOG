@@ -1,0 +1,11 @@
+# Task ID: 7
+# Title: 일기 검색 및 필터링 시스템 구현
+# Status: pending
+# Dependencies: 6
+# Priority: medium
+# Description: 일기 항목에 대한 포괄적인 검색 및 필터링 기능 구축
+# Details:
+Create search functionality by date range, emotion tags, and text content. Implement advanced filtering with multiple criteria. Build pagination for diary lists. Create sorting options (date, emotion, etc.). Add search result highlighting. Implement saved search/filter presets. Use Supabase full-text search capabilities for content search.
+
+# Test Strategy:
+Test search accuracy across different criteria, verify filtering logic, validate pagination performance, and ensure search result relevance.

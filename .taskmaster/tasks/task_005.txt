@@ -1,0 +1,11 @@
+# Task ID: 5
+# Title: 감정 태그 관리 시스템 개발
+# Status: pending
+# Dependencies: 2, 4
+# Priority: medium
+# Description: 자동 감정 태그 생성 및 관리 기능 구현
+# Details:
+Create emotion tag CRUD operations with Drizzle ORM. Implement auto-tag creation when new emotions are entered in diary forms. Build tag editing interface with color and icon selection. Create tag categorization system (positive/negative/neutral). Implement tag usage analytics and frequency tracking. Add tag deletion with usage warnings. Create tag search and filtering functionality.
+
+# Test Strategy:
+Test automatic tag creation during diary entry, verify tag CRUD operations, validate categorization logic, and ensure tag analytics are accurate.

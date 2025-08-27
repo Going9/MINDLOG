@@ -1,0 +1,1018 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "React Router v7과 TypeScript로 프로젝트 초기화",
+        "description": "React Router v7, TypeScript 및 필수 종속성을 포함한 기본 프로젝트 구조 설정",
+        "details": "Create new React Router v7 project using `npx create-react-router@latest`. Configure TypeScript, ESLint, and Prettier. Install core dependencies: React 19, TypeScript, TailwindCSS, shadcn/ui, Radix UI. Set up project structure with app/routes, app/features, app/lib, app/components, app/styles directories as specified in PRD. Configure Vite/build tools for SSR/SPA hybrid mode.",
+        "testStrategy": "Verify project builds successfully, TypeScript compilation works, and dev server starts without errors. Test both SSR and SPA routing modes.",
+        "priority": "high",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create React Router v7 project and initial setup",
+            "description": "Initialize new project using create-react-router CLI and verify basic structure",
+            "dependencies": [],
+            "details": "Run `npx create-react-router@latest` to create new project. Choose TypeScript template option. Verify project structure is created correctly with app/ directory and basic routing setup. Test initial dev server startup.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Configure TypeScript with strict settings",
+            "description": "Set up TypeScript configuration with strict mode and project-specific settings",
+            "dependencies": [
+              "1.1"
+            ],
+            "details": "Configure tsconfig.json with strict TypeScript settings. Enable strict mode, noImplicitAny, and other type checking options. Set up path mapping for clean imports. Configure TypeScript for React Router v7 and SSR compatibility.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Install and configure core dependencies",
+            "description": "Install React 19, TailwindCSS, shadcn/ui, Radix UI and configure package.json",
+            "dependencies": [
+              "1.2"
+            ],
+            "details": "Install React 19, TypeScript, TailwindCSS, shadcn/ui, and Radix UI packages. Configure TailwindCSS with React Router v7 project structure. Set up shadcn/ui initialization and configuration. Update package.json with proper scripts and dependencies.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Set up ESLint and Prettier configuration",
+            "description": "Configure code formatting and linting tools for consistent code quality",
+            "dependencies": [
+              "1.3"
+            ],
+            "details": "Install and configure ESLint with React, TypeScript, and React Router v7 rules. Set up Prettier for code formatting. Configure .eslintrc and .prettierrc files. Add lint and format scripts to package.json. Set up pre-commit hooks if needed.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create project directory structure",
+            "description": "Set up organized folder structure following PRD specifications",
+            "dependencies": [
+              "1.4"
+            ],
+            "details": "Create app/routes, app/features, app/lib, app/components, and app/styles directories. Set up proper folder structure for scalable development. Create index files and initial component templates. Configure path aliases in TypeScript for clean imports.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Configure Vite build tools for SSR/SPA hybrid mode",
+            "description": "Set up build configuration supporting both server-side rendering and single-page application modes",
+            "dependencies": [
+              "1.5"
+            ],
+            "details": "Configure Vite settings for React Router v7 SSR/SPA hybrid mode. Set up build scripts for both development and production environments. Configure environment variables and build optimizations. Test both SSR and SPA routing modes work correctly.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Supabase 데이터베이스 및 Drizzle ORM 구성",
+        "description": "Supabase 프로젝트 설정, 데이터베이스 스키마 구성 및 Drizzle ORM 통합",
+        "details": "Create Supabase project and configure environment variables. Install Drizzle ORM and related packages. Define database schema with tables: profiles, emotionTags, diaries, diaryTags, notificationSettings. Implement RLS policies for data isolation. Set up database migrations and connection configuration. Configure Supabase client with proper TypeScript types.",
+        "testStrategy": "Test database connection, run migrations successfully, verify RLS policies work correctly, and ensure type safety with Drizzle queries.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Supabase 프로젝트 생성 및 초기 설정",
+            "description": "새 Supabase 프로젝트를 생성하고 기본 설정을 구성",
+            "dependencies": [],
+            "details": "Create new Supabase project through dashboard, obtain project URL and anon key, set up basic project configuration and settings",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "환경 변수 및 Supabase 클라이언트 구성",
+            "description": "환경 변수 설정 및 Supabase 클라이언트 초기화",
+            "dependencies": [
+              "2.1"
+            ],
+            "details": "Configure .env files with Supabase URL and keys, create Supabase client configuration with TypeScript types, set up environment-specific configurations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Drizzle ORM 및 관련 패키지 설치",
+            "description": "Drizzle ORM과 필요한 종속성 패키지들을 설치",
+            "dependencies": [
+              "2.2"
+            ],
+            "details": "Install drizzle-orm, @supabase/supabase-js, drizzle-kit, and postgres driver. Configure package.json scripts for database operations",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "데이터베이스 스키마 정의",
+            "description": "모든 테이블의 스키마를 Drizzle로 정의",
+            "dependencies": [
+              "2.3"
+            ],
+            "details": "Define schemas for profiles, emotionTags, diaries, diaryTags, and notificationSettings tables with proper relationships, constraints, and TypeScript types",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "RLS 정책 구현",
+            "description": "데이터 보안을 위한 Row Level Security 정책 설정",
+            "dependencies": [
+              "2.4"
+            ],
+            "details": "Implement RLS policies for all tables to ensure users can only access their own data, configure authentication-based access controls",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "데이터베이스 마이그레이션 설정",
+            "description": "마이그레이션 시스템 구성 및 초기 마이그레이션 생성",
+            "dependencies": [
+              "2.5"
+            ],
+            "details": "Set up Drizzle migration system, create initial migration files, configure migration scripts and deployment process",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "데이터베이스 연결 구성",
+            "description": "Drizzle과 Supabase 간의 연결 설정",
+            "dependencies": [
+              "2.6"
+            ],
+            "details": "Configure database connection with Drizzle, set up connection pooling, implement error handling and retry logic",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "연결 테스트 및 검증",
+            "description": "데이터베이스 연결 및 설정 전체의 테스트 및 검증",
+            "dependencies": [
+              "2.7"
+            ],
+            "details": "Test database connectivity, run sample queries, verify RLS policies work correctly, validate TypeScript type generation, and ensure migration system functions properly",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Supabase Auth를 사용한 OAuth 인증 구현",
+        "description": "Google, GitHub, Discord OAuth 제공자를 통한 소셜 로그인 시스템 설정",
+        "details": "Configure Supabase Auth with OAuth providers (Google, GitHub, Discord). Implement authentication context/hooks using React Context API. Create login/logout components with shadcn/ui. Set up protected routes and authentication middleware. Handle JWT tokens and session management. Implement user profile creation flow that populates profiles table on first login.",
+        "testStrategy": "Test OAuth flows for all providers, verify protected routes work, confirm JWT token handling, and validate profile creation on first login.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Configure OAuth providers in Supabase Dashboard",
+            "description": "Set up Google, GitHub, and Discord OAuth applications and configure them in Supabase Auth settings",
+            "dependencies": [],
+            "details": "Create OAuth applications in Google Cloud Console, GitHub Developer Settings, and Discord Developer Portal. Configure redirect URLs, obtain client IDs and secrets. Add OAuth provider configurations to Supabase Auth settings with proper scopes and redirect URLs.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Install and configure Supabase client with Auth",
+            "description": "Set up Supabase JavaScript client with authentication configuration and environment variables",
+            "dependencies": [],
+            "details": "Install @supabase/supabase-js package. Configure Supabase client with project URL and anon key. Set up environment variables for Supabase configuration. Configure Auth settings including session persistence and cookie options.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Create React authentication context and hooks",
+            "description": "Implement authentication context using React Context API with custom hooks for auth state management",
+            "dependencies": [
+              "3.2"
+            ],
+            "details": "Create AuthContext with user state, loading states, and authentication methods. Implement useAuth hook for consuming auth context. Create useSupabaseClient hook for accessing authenticated client. Add session management and token refresh logic.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Build login/logout UI components",
+            "description": "Create authentication UI components using shadcn/ui for OAuth login and logout functionality",
+            "dependencies": [
+              "3.3"
+            ],
+            "details": "Design and implement OAuth login buttons for Google, GitHub, and Discord using shadcn/ui Button components. Create logout functionality with confirmation dialog. Add loading states and error handling. Style components to match application theme.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Implement JWT token handling and storage",
+            "description": "Set up secure JWT token management, storage, and refresh mechanisms",
+            "dependencies": [
+              "3.3"
+            ],
+            "details": "Configure automatic token refresh using Supabase session management. Implement secure token storage using httpOnly cookies or localStorage with proper security measures. Add token validation and expiry handling. Set up automatic logout on token expiration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Create session management system",
+            "description": "Build comprehensive session management with persistence and cleanup functionality",
+            "dependencies": [
+              "3.5"
+            ],
+            "details": "Implement session persistence across browser refreshes and tabs. Add session cleanup on logout and token expiration. Create session monitoring for concurrent logins. Configure session timeouts and idle detection. Handle session restoration on app initialization.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Set up protected routes and authentication middleware",
+            "description": "Implement route protection and authentication middleware for secure page access",
+            "dependencies": [
+              "3.6"
+            ],
+            "details": "Create ProtectedRoute component that checks authentication status. Implement authentication guards for sensitive routes. Add redirect logic for unauthenticated users. Create public/private route separation. Set up middleware for automatic auth state checking on route changes.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Implement user profile creation flow",
+            "description": "Create automatic user profile creation system that populates profiles table on first login",
+            "dependencies": [
+              "3.7"
+            ],
+            "details": "Create profile creation logic that triggers on first OAuth login. Map OAuth user data to profiles table schema. Implement profile completion flow for missing required fields. Add error handling for profile creation failures. Set up profile update mechanism for subsequent logins.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Add authentication error handling and testing",
+            "description": "Implement comprehensive error handling for authentication flows and create test suite",
+            "dependencies": [
+              "3.8"
+            ],
+            "details": "Add error handling for OAuth failures, network issues, and token problems. Create user-friendly error messages and recovery flows. Implement retry logic for transient failures. Write unit tests for auth hooks and components. Test all OAuth provider flows end-to-end.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "shadcn/ui로 핵심 UI 컴포넌트 구축",
+        "description": "shadcn/ui와 TailwindCSS를 사용하여 재사용 가능한 UI 컴포넌트 및 레이아웃 구조 생성",
+        "details": "Install and configure shadcn/ui components. Create main layout components (Header, Navigation, Sidebar). Implement responsive design with mobile-first approach. Build form components for diary entries with proper validation. Create emotion tag selector components with multi-select capability. Design modal/dialog components for confirmations. Set up theme system with CSS variables.",
+        "testStrategy": "Test responsiveness across devices, verify accessibility standards, validate form components work correctly, and ensure consistent styling.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install and configure shadcn/ui with TailwindCSS",
+            "description": "Set up shadcn/ui component library and configure TailwindCSS integration",
+            "dependencies": [],
+            "details": "Install shadcn/ui CLI, initialize components.json, configure TailwindCSS with shadcn/ui presets, and set up base styling structure",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Create main layout components (Header, Navigation, Sidebar)",
+            "description": "Build core layout components for application structure",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Create Header component with logo and user menu, build Navigation component with route links, implement collapsible Sidebar component, and ensure proper layout composition",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Implement responsive design with mobile-first approach",
+            "description": "Configure responsive breakpoints and mobile-optimized layouts",
+            "dependencies": [
+              "4.2"
+            ],
+            "details": "Set up TailwindCSS responsive utilities, create mobile navigation menu, implement responsive grid layouts, and ensure touch-friendly interactions",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Build form components with validation",
+            "description": "Create reusable form components for diary entries with proper validation",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Build form components using shadcn/ui form primitives, implement input validation with react-hook-form, create error handling and display, and add form accessibility features",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create emotion tag selector with multi-select capability",
+            "description": "Build emotion tag selector component for diary entries",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Create multi-select tag component using shadcn/ui Select or Command components, implement emotion tag filtering and searching, add custom emotion tag creation, and ensure proper state management",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Design modal and dialog components",
+            "description": "Create reusable modal and dialog components for confirmations and interactions",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Build Modal component using shadcn/ui Dialog, create confirmation dialogs, implement alert dialogs, add form dialogs, and ensure proper focus management and accessibility",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Set up theme system with CSS variables",
+            "description": "Implement comprehensive theming system with light/dark mode support",
+            "dependencies": [
+              "4.1"
+            ],
+            "details": "Configure CSS custom properties for theming, implement theme provider context, create theme toggle component, set up color palette with semantic tokens, and ensure consistent theme application across components",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "감정 태그 관리 시스템 개발",
+        "description": "자동 감정 태그 생성 및 관리 기능 구현",
+        "details": "Create emotion tag CRUD operations with Drizzle ORM. Implement auto-tag creation when new emotions are entered in diary forms. Build tag editing interface with color and icon selection. Create tag categorization system (positive/negative/neutral). Implement tag usage analytics and frequency tracking. Add tag deletion with usage warnings. Create tag search and filtering functionality.",
+        "testStrategy": "Test automatic tag creation during diary entry, verify tag CRUD operations, validate categorization logic, and ensure tag analytics are accurate.",
+        "priority": "medium",
+        "dependencies": [
+          2,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create emotion tag database schema and Drizzle ORM setup",
+            "description": "Define emotionTags table schema with fields for id, name, color, icon, category, usage_count, created_at, updated_at and set up Drizzle ORM operations",
+            "dependencies": [],
+            "details": "Create emotionTags table with proper TypeScript types. Include fields for tag categorization (positive/negative/neutral), usage tracking, and metadata. Set up Drizzle ORM CRUD operations with proper error handling and validation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Implement automatic tag creation logic during diary entry",
+            "description": "Build system to automatically generate emotion tags when new emotions are detected in diary forms",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Create emotion detection and parsing logic for diary text. Implement automatic tag suggestion and creation workflow. Add duplicate detection and merging logic. Include user confirmation flow for new tag creation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Build tag editing interface with color and icon selection",
+            "description": "Create comprehensive tag management UI with visual customization options",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Design and implement tag editing form with color picker, icon selector from predefined set. Add real-time preview of tag appearance. Include validation for tag names and visual properties. Implement responsive design for mobile and desktop.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Implement tag categorization system (positive/negative/neutral)",
+            "description": "Create automatic and manual categorization system for emotion tags",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Build categorization logic with automatic emotion sentiment analysis. Create UI for manual category assignment and override. Implement category-based filtering and sorting. Add visual indicators for different categories.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Create tag usage analytics and frequency tracking",
+            "description": "Implement comprehensive analytics system for tracking tag usage patterns",
+            "dependencies": [
+              "5.1"
+            ],
+            "details": "Build usage tracking system that increments counters on tag use. Create analytics queries for frequency, trends, and patterns. Implement time-based analytics (daily, weekly, monthly usage). Add data aggregation and caching for performance.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Add tag deletion functionality with usage warnings",
+            "description": "Implement safe tag deletion with usage impact warnings and data integrity checks",
+            "dependencies": [
+              "5.1",
+              "5.5"
+            ],
+            "details": "Create tag deletion confirmation dialog with usage statistics. Implement cascade deletion or reference cleanup for diary entries. Add warnings for heavily used tags. Include option to merge tags before deletion to preserve data.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Create tag search and filtering functionality",
+            "description": "Build comprehensive search and filter system for tag management",
+            "dependencies": [
+              "5.1",
+              "5.4"
+            ],
+            "details": "Implement real-time search with fuzzy matching. Create filters by category, usage frequency, creation date, and color. Add sorting options (alphabetical, usage, recent). Include advanced search with multiple criteria combinations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Integrate tag management with diary form and display components",
+            "description": "Connect tag management system with existing diary functionality and create cohesive user experience",
+            "dependencies": [
+              "5.2",
+              "5.3",
+              "5.7"
+            ],
+            "details": "Integrate tag selection in diary forms with auto-complete and suggestions. Update diary display to show associated tags with proper styling. Implement tag-based filtering in diary list views. Add tag management shortcuts and quick actions in diary interface.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "일기 항목 생성 및 관리 구축",
+        "description": "필수 필드 및 이미지 업로드를 포함한 핵심 일기 기능 구현",
+        "details": "Create diary entry form with all required fields: date, mainEmotions (multi-select), situation, reaction, physicalSensation, desiredReaction, gratitudeMoment, selfKindWords. Implement image upload using Supabase Storage. Create diary CRUD operations with soft delete. Build diary validation with TypeScript schemas. Implement auto-save functionality. Create rich text editor for longer text fields.",
+        "testStrategy": "Test all form fields validation, verify image upload to Supabase Storage, test CRUD operations, and validate soft delete functionality.",
+        "priority": "high",
+        "dependencies": [
+          3,
+          5
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "일기 작성 폼 컴포넌트 구조 설계",
+            "description": "모든 필수 필드를 포함한 기본 일기 작성 폼 컴포넌트 생성",
+            "dependencies": [],
+            "details": "Create DiaryEntryForm component with all required form fields: date, situation, reaction, physicalSensation, desiredReaction, gratitudeMoment, selfKindWords. Set up form layout and basic styling with TailwindCSS and shadcn/ui components.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "감정 다중선택 컴포넌트 구현",
+            "description": "mainEmotions 필드용 다중선택 감정 태그 컴포넌트 개발",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Create multi-select emotion component integrated with emotion tags from database. Implement tag selection UI with visual feedback, search functionality, and proper form integration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Supabase Storage 이미지 업로드 기능",
+            "description": "일기 항목에 이미지 첨부를 위한 Supabase Storage 통합",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Implement image upload functionality using Supabase Storage. Create image preview, upload progress, and file validation. Set up proper storage buckets and RLS policies for image access.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "일기 CRUD 작업 구현",
+            "description": "일기 생성, 읽기, 수정, 삭제 기능을 위한 데이터베이스 작업",
+            "dependencies": [],
+            "details": "Implement diary CRUD operations using Drizzle ORM. Create database queries for creating, reading, updating diary entries. Set up proper error handling and data validation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "소프트 삭제 기능 구현",
+            "description": "일기 항목의 소프트 삭제 메커니즘 구현",
+            "dependencies": [
+              "6.4"
+            ],
+            "details": "Implement soft delete functionality by adding deleted_at field and updating CRUD operations to handle soft-deleted entries. Create restore functionality and proper filtering.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "TypeScript 스키마 유효성 검사",
+            "description": "일기 데이터를 위한 포괄적인 TypeScript 스키마 및 유효성 검사",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Create TypeScript schemas using Zod for diary entry validation. Implement client-side and server-side validation with proper error messages and type safety.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "자동 저장 기능 개발",
+            "description": "일기 작성 중 자동 저장 및 임시 저장 기능 구현",
+            "dependencies": [
+              "6.4",
+              "6.6"
+            ],
+            "details": "Implement auto-save functionality that periodically saves draft entries. Create draft management system with conflict resolution and recovery mechanisms.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "리치 텍스트 에디터 통합",
+            "description": "긴 텍스트 필드용 리치 텍스트 에디터 컴포넌트 구현",
+            "dependencies": [
+              "6.1"
+            ],
+            "details": "Integrate rich text editor (like Tiptap or Quill) for situation, reaction, and other longer text fields. Implement formatting options, content sanitization, and proper form integration.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "폼 상태 관리 시스템",
+            "description": "복잡한 일기 폼을 위한 상태 관리 및 사용자 경험 최적화",
+            "dependencies": [
+              "6.1",
+              "6.2",
+              "6.3",
+              "6.8"
+            ],
+            "details": "Implement comprehensive form state management using React Hook Form or similar. Handle form validation, field dependencies, and user experience improvements like progress saving.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "데이터 지속성 및 테스트",
+            "description": "일기 기능의 종합적인 테스트 및 데이터 무결성 검증",
+            "dependencies": [
+              "6.4",
+              "6.5",
+              "6.6",
+              "6.7"
+            ],
+            "details": "Create comprehensive tests for diary CRUD operations, data persistence, validation, and user workflows. Test edge cases, error handling, and data integrity scenarios.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "일기 검색 및 필터링 시스템 구현",
+        "description": "일기 항목에 대한 포괄적인 검색 및 필터링 기능 구축",
+        "details": "Create search functionality by date range, emotion tags, and text content. Implement advanced filtering with multiple criteria. Build pagination for diary lists. Create sorting options (date, emotion, etc.). Add search result highlighting. Implement saved search/filter presets. Use Supabase full-text search capabilities for content search.",
+        "testStrategy": "Test search accuracy across different criteria, verify filtering logic, validate pagination performance, and ensure search result relevance.",
+        "priority": "medium",
+        "dependencies": [
+          6
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "날짜 범위 검색 기능 구현",
+            "description": "사용자가 특정 날짜 범위로 일기를 검색할 수 있는 기능 구현",
+            "dependencies": [],
+            "details": "Create date range picker component using Radix UI Calendar. Implement date filtering logic in database queries. Add validation for date ranges and handle edge cases like invalid date selections. Create UI components for date range selection with proper accessibility.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "감정 태그 필터링 시스템",
+            "description": "감정 태그를 기반으로 일기를 필터링하는 시스템 구축",
+            "dependencies": [],
+            "details": "Build emotion tag selection interface with multi-select capability. Implement tag-based filtering in database queries using JOIN operations. Create tag display components with proper styling. Add tag filtering logic that supports AND/OR operations between multiple tags.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Supabase 풀텍스트 검색 구현",
+            "description": "Supabase의 풀텍스트 검색 기능을 활용한 일기 내용 검색",
+            "dependencies": [],
+            "details": "Configure Supabase full-text search on diary content fields. Implement search query processing with proper indexing. Create search input component with debounced search functionality. Add search query highlighting and relevance scoring. Handle special characters and search operators.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "고급 다중 조건 필터링",
+            "description": "여러 검색 조건을 조합할 수 있는 고급 필터링 시스템",
+            "dependencies": [
+              "7.1",
+              "7.2",
+              "7.3"
+            ],
+            "details": "Combine date range, emotion tags, and text search into unified filtering system. Implement complex query builder that handles multiple filter combinations. Create advanced filter UI with collapsible sections. Add filter combination logic (AND/OR operations) and filter validation.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "페이지네이션 시스템 구축",
+            "description": "검색 결과에 대한 효율적인 페이지네이션 시스템 구현",
+            "dependencies": [
+              "7.4"
+            ],
+            "details": "Implement cursor-based pagination for better performance with large datasets. Create pagination UI components with page numbers and navigation controls. Add infinite scroll option for mobile devices. Optimize database queries to handle pagination efficiently with proper indexing.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "정렬 옵션 및 검색 결과 하이라이팅",
+            "description": "검색 결과 정렬 기능과 검색어 하이라이팅 구현",
+            "dependencies": [
+              "7.4"
+            ],
+            "details": "Implement multiple sorting options (date, emotion, relevance). Create sorting UI controls with clear visual indicators. Add search term highlighting in results using text matching algorithms. Implement result snippet generation with context around search terms.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "검색 프리셋 저장 시스템",
+            "description": "자주 사용하는 검색/필터 조건을 저장하고 재사용할 수 있는 시스템",
+            "dependencies": [
+              "7.4"
+            ],
+            "details": "Create saved search functionality with user-defined names. Implement search preset management (save, edit, delete). Add quick access to saved searches in UI. Store search presets in user profile with proper data structure. Create preset sharing functionality between users if needed.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "사용자 프로필 및 설정 관리 생성",
+        "description": "사용자 프로필 관리 및 애플리케이션 설정 인터페이스 구축",
+        "details": "Create profile editing interface (avatar, name, username, email). Implement avatar upload using Supabase Storage. Build settings page for tag management, privacy preferences, and account settings. Create user role management (admin/user). Implement data export functionality. Add account deletion with data cleanup. Create settings persistence and synchronization.",
+        "testStrategy": "Test profile updates, verify avatar upload, validate settings persistence, and ensure proper data cleanup on account deletion.",
+        "priority": "medium",
+        "dependencies": [
+          3,
+          4
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "프로필 편집 인터페이스 생성",
+            "description": "사용자 정보 수정을 위한 프로필 편집 폼 인터페이스 구축",
+            "dependencies": [],
+            "details": "Create profile editing form with fields for avatar, name, username, and email. Implement form validation and error handling. Use shadcn/ui components for consistent design. Add loading states and success feedback.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Supabase Storage를 활용한 아바타 업로드 구현",
+            "description": "Supabase Storage를 사용한 프로필 아바타 이미지 업로드 및 관리 기능",
+            "dependencies": [
+              "8.1"
+            ],
+            "details": "Implement avatar upload using Supabase Storage buckets. Add image resizing and validation. Create avatar preview functionality. Handle upload progress and error states. Implement avatar deletion and replacement.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "설정 페이지 개발",
+            "description": "태그 관리, 개인정보 설정, 계정 설정을 포함한 종합 설정 페이지 구축",
+            "dependencies": [],
+            "details": "Build settings page with sections for tag management, privacy preferences, and account settings. Create intuitive navigation between settings sections. Implement settings categories with proper grouping and accessibility.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "사용자 역할 관리 시스템 구현",
+            "description": "관리자/사용자 권한 시스템 및 역할 기반 접근 제어 구현",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Implement user role management with admin and user roles. Create role-based access control for different features. Add role assignment and permission checking functionality. Implement admin interface for user management.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "데이터 내보내기 기능 구현",
+            "description": "사용자 데이터를 다양한 형식으로 내보내는 기능 개발",
+            "dependencies": [
+              "8.3"
+            ],
+            "details": "Create data export functionality for user profiles, diaries, and settings. Support multiple export formats (JSON, CSV). Implement secure data packaging and download. Add export progress tracking and completion notifications.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "계정 삭제 및 데이터 정리 시스템 구현",
+            "description": "계정 삭제 시 관련 데이터 완전 정리 및 설정 동기화 기능 구현",
+            "dependencies": [
+              "8.4",
+              "8.5"
+            ],
+            "details": "Implement account deletion with complete data cleanup. Create confirmation workflows for account deletion. Ensure proper data cleanup from database and storage. Implement settings persistence and synchronization across devices. Add data recovery grace period before permanent deletion.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "웹 푸시 알림 시스템 구현",
+        "description": "Service Worker를 사용한 포괄적인 푸시 알림 시스템 구축",
+        "details": "Set up Service Worker for push notifications. Create notification permission handling. Build notification settings interface with time customization. Implement smart notification logic based on user patterns. Create notification templates and content customization. Set up notification scheduling system. Add notification history and management. Implement push subscription management with Supabase.",
+        "testStrategy": "Test notification permissions, verify Service Worker registration, validate notification delivery, and ensure notification settings work correctly.",
+        "priority": "low",
+        "dependencies": [
+          2,
+          8
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Service Worker 기본 설정 및 등록",
+            "description": "푸시 알림을 위한 Service Worker 파일 생성 및 등록 로직 구현",
+            "dependencies": [],
+            "details": "Create service worker file (sw.js) with basic push event handlers. Implement service worker registration logic in main application. Add service worker lifecycle management (install, activate, update). Set up proper scoping and cache strategies for offline functionality.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "푸시 알림 권한 요청 및 관리",
+            "description": "브라우저 알림 권한 요청 및 상태 관리 시스템 구축",
+            "dependencies": [
+              "9.1"
+            ],
+            "details": "Implement permission request flow with user-friendly prompts. Create permission status checking and handling. Add fallback messaging for denied permissions. Implement permission change detection and user guidance for enabling notifications in browser settings.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "푸시 구독 관리 시스템",
+            "description": "푸시 구독 생성, 저장 및 Supabase 연동 구현",
+            "dependencies": [
+              "9.2"
+            ],
+            "details": "Generate push subscription using browser Push API. Store subscription data in Supabase with user association. Implement subscription renewal and error handling. Create subscription cleanup for logged out users. Add VAPID key configuration and management.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "알림 설정 인터페이스 구축",
+            "description": "사용자가 알림 설정을 커스터마이징할 수 있는 UI 컴포넌트 개발",
+            "dependencies": [
+              "9.3"
+            ],
+            "details": "Create settings page with notification preferences. Implement toggle controls for different notification types. Add frequency settings (daily, weekly, custom intervals). Create quiet hours configuration with time pickers. Build notification preview functionality.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "시간 기반 알림 커스터마이징",
+            "description": "사용자 정의 시간대 및 스케줄링 옵션 구현",
+            "dependencies": [
+              "9.4"
+            ],
+            "details": "Implement timezone detection and handling. Create custom time slot selection interface. Add recurring notification patterns (daily, weekly, monthly). Implement quiet hours and do-not-disturb periods. Create time-based notification rules engine.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "스마트 알림 로직 시스템",
+            "description": "사용자 패턴 기반 지능형 알림 시스템 구축",
+            "dependencies": [
+              "9.5"
+            ],
+            "details": "Analyze user diary writing patterns and frequency. Implement adaptive notification timing based on user activity. Create engagement-based notification optimization. Add machine learning-inspired pattern recognition for optimal notification times. Implement notification fatigue prevention.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "알림 템플릿 및 콘텐츠 시스템",
+            "description": "다양한 알림 템플릿과 개인화된 콘텐츠 생성 시스템",
+            "dependencies": [
+              "9.6"
+            ],
+            "details": "Create notification templates for different contexts (writing reminders, mood check-ins, achievements). Implement dynamic content generation based on user data. Add personalization with user name and recent activities. Create motivational and encouraging message variations. Implement A/B testing for notification effectiveness.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "알림 스케줄링 엔진",
+            "description": "서버사이드 알림 스케줄링 및 배치 시스템 구현",
+            "dependencies": [
+              "9.7"
+            ],
+            "details": "Build server-side notification scheduling system. Implement cron jobs or scheduled functions for notification delivery. Create batch notification processing for efficiency. Add retry logic for failed notifications. Implement notification queue management and rate limiting.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "알림 히스토리 및 관리",
+            "description": "알림 기록 추적, 관리 및 사용자 상호작용 시스템",
+            "dependencies": [
+              "9.8"
+            ],
+            "details": "Create notification history storage and retrieval system. Implement notification interaction tracking (opened, dismissed, clicked). Add notification management interface for users to view and manage past notifications. Create notification analytics and effectiveness metrics. Implement notification cleanup and archival.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "전체 시스템 통합 및 테스팅",
+            "description": "푸시 알림 시스템의 모든 컴포넌트 통합 및 종합 테스트",
+            "dependencies": [
+              "9.9"
+            ],
+            "details": "Integrate all notification components into cohesive system. Implement comprehensive error handling and fallback mechanisms. Create end-to-end testing for notification flow. Add performance monitoring and analytics. Implement cross-browser compatibility testing. Create user acceptance testing scenarios and documentation.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "분석 대시보드 및 데이터 시각화 구축",
+        "description": "감정 패턴 분석 및 통계 시각화 대시보드 생성",
+        "details": "Implement emotion frequency analysis using diary data. Create data visualization components using Chart.js or Recharts. Build emotion pattern tracking over time. Create statistical summaries (most used tags, writing frequency, etc.). Implement trend analysis and pattern recognition. Create export functionality for analytics data. Add date range filtering for analytics. Build responsive dashboard layout.",
+        "testStrategy": "Test data accuracy in analytics, verify chart rendering, validate statistical calculations, and ensure dashboard responsiveness across devices.",
+        "priority": "low",
+        "dependencies": [
+          6,
+          7
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "감정 빈도 분석 알고리즘 구현",
+            "description": "일기 데이터를 기반으로 감정 태그별 빈도를 계산하는 분석 로직 개발",
+            "dependencies": [],
+            "details": "Create functions to analyze emotion tag frequency from diary entries. Implement data aggregation logic to count emotion occurrences over different time periods. Build statistical calculations for emotion distribution and percentages. Create helper functions for data filtering and grouping by date ranges.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Chart.js 또는 Recharts 라이브러리 통합",
+            "description": "데이터 시각화를 위한 차트 라이브러리 설치 및 기본 설정",
+            "dependencies": [],
+            "details": "Install and configure Chart.js or Recharts library. Set up chart components architecture and theming. Create reusable chart wrapper components with proper TypeScript types. Implement responsive chart configurations and styling integration with TailwindCSS.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "시간별 감정 패턴 추적 컴포넌트 구축",
+            "description": "시간 경과에 따른 감정 변화를 추적하고 시각화하는 컴포넌트 개발",
+            "dependencies": [
+              "10.1",
+              "10.2"
+            ],
+            "details": "Build line charts and area charts to show emotion trends over time. Implement time series analysis for emotion patterns. Create interactive timeline components with zoom and pan functionality. Add pattern recognition for cyclical or seasonal emotion trends.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "통계 요약 계산 및 표시",
+            "description": "가장 많이 사용된 태그, 작성 빈도 등 주요 통계 지표 계산 및 표시",
+            "dependencies": [
+              "10.1"
+            ],
+            "details": "Implement calculations for most frequently used emotion tags. Create writing frequency analytics (daily, weekly, monthly patterns). Build statistical summaries including averages, trends, and streak calculations. Design summary cards and widgets to display key metrics.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "트렌드 분석 및 패턴 인식 알고리즘",
+            "description": "데이터에서 의미있는 트렌드와 패턴을 식별하는 분석 로직 구현",
+            "dependencies": [
+              "10.1",
+              "10.3"
+            ],
+            "details": "Develop algorithms to identify emotion trends (improving, declining, stable). Implement pattern recognition for weekly/monthly cycles. Create correlation analysis between different emotions. Build predictive indicators and trend forecasting logic.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "분석 데이터 내보내기 기능",
+            "description": "분석 결과를 CSV, JSON 등 다양한 형식으로 내보내는 기능 구현",
+            "dependencies": [
+              "10.1",
+              "10.4"
+            ],
+            "details": "Create export functionality for analytics data in multiple formats (CSV, JSON, PDF). Implement data formatting and sanitization for exports. Build export configuration options (date ranges, data types). Add progress indicators and error handling for export operations.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "날짜 범위 필터링 시스템",
+            "description": "분석 대시보드에서 특정 기간 데이터만 조회할 수 있는 필터링 기능 구현",
+            "dependencies": [],
+            "details": "Build date range picker components with preset options (last week, month, year). Implement filtering logic to update all charts and statistics based on selected date range. Create URL state management for filter persistence. Add validation for date range selections.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "반응형 대시보드 레이아웃 구축",
+            "description": "다양한 디바이스에서 최적화된 대시보드 레이아웃 및 UI 구현",
+            "dependencies": [
+              "10.2"
+            ],
+            "details": "Design responsive grid layout for dashboard components. Implement mobile-first approach with proper breakpoints. Create collapsible sidebar and navigation for mobile devices. Ensure charts and widgets adapt properly to different screen sizes using CSS Grid and Flexbox.",
+            "status": "pending",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "대용량 데이터셋 성능 최적화",
+            "description": "많은 일기 데이터 처리 시 대시보드 성능을 최적화하는 기능 구현",
+            "dependencies": [
+              "10.1",
+              "10.3"
+            ],
+            "details": "Implement data pagination and lazy loading for large datasets. Add caching mechanisms for computed analytics. Optimize chart rendering performance with data sampling and virtualization. Create loading states and skeleton screens for better UX during data processing.",
+            "status": "pending",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-08-27T12:39:58.090Z",
+      "updated": "2025-08-27T12:39:58.090Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

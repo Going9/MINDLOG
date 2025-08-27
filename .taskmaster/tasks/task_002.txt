@@ -1,0 +1,11 @@
+# Task ID: 2
+# Title: Supabase 데이터베이스 및 Drizzle ORM 구성
+# Status: pending
+# Dependencies: 1
+# Priority: high
+# Description: Supabase 프로젝트 설정, 데이터베이스 스키마 구성 및 Drizzle ORM 통합
+# Details:
+Create Supabase project and configure environment variables. Install Drizzle ORM and related packages. Define database schema with tables: profiles, emotionTags, diaries, diaryTags, notificationSettings. Implement RLS policies for data isolation. Set up database migrations and connection configuration. Configure Supabase client with proper TypeScript types.
+
+# Test Strategy:
+Test database connection, run migrations successfully, verify RLS policies work correctly, and ensure type safety with Drizzle queries.

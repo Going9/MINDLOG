@@ -1,0 +1,11 @@
+# Task ID: 4
+# Title: shadcn/ui로 핵심 UI 컴포넌트 구축
+# Status: pending
+# Dependencies: 1
+# Priority: medium
+# Description: shadcn/ui와 TailwindCSS를 사용하여 재사용 가능한 UI 컴포넌트 및 레이아웃 구조 생성
+# Details:
+Install and configure shadcn/ui components. Create main layout components (Header, Navigation, Sidebar). Implement responsive design with mobile-first approach. Build form components for diary entries with proper validation. Create emotion tag selector components with multi-select capability. Design modal/dialog components for confirmations. Set up theme system with CSS variables.
+
+# Test Strategy:
+Test responsiveness across devices, verify accessibility standards, validate form components work correctly, and ensure consistent styling.
