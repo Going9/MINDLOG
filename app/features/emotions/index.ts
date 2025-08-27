@@ -1,0 +1,1 @@
+// Emotion tags management feature module

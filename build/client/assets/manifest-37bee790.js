@@ -1,0 +1,38 @@
+window.__reactRouterManifest = {
+  entry: {
+    module: '/assets/entry.client-BWBOP0Ds.js',
+    imports: ['/assets/chunk-PVWAREVJ-BGDX7Rsd.js'],
+    css: [],
+  },
+  routes: {
+    root: {
+      id: 'root',
+      path: '',
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasClientMiddleware: false,
+      hasErrorBoundary: true,
+      module: '/assets/root-BUsbXsQC.js',
+      imports: ['/assets/chunk-PVWAREVJ-BGDX7Rsd.js'],
+      css: ['/assets/root-BBNcmVLT.css'],
+    },
+    'routes/home': {
+      id: 'routes/home',
+      parentId: 'root',
+      index: true,
+      hasAction: false,
+      hasLoader: false,
+      hasClientAction: false,
+      hasClientLoader: false,
+      hasClientMiddleware: false,
+      hasErrorBoundary: false,
+      module: '/assets/home-CK7DOD9F.js',
+      imports: ['/assets/chunk-PVWAREVJ-BGDX7Rsd.js'],
+      css: [],
+    },
+  },
+  url: '/assets/manifest-37bee790.js',
+  version: '37bee790',
+};

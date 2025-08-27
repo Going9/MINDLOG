@@ -1,93 +1,93 @@
 {
-	"meta": {
-		"generatedAt": "2025-08-27T13:07:49.363Z",
-		"tasksAnalyzed": 10,
-		"totalTasks": 10,
-		"analysisCount": 10,
-		"thresholdScore": 5,
-		"projectName": "Task Master",
-		"usedResearch": false
-	},
-	"complexityAnalysis": [
-		{
-			"taskId": 1,
-			"taskTitle": "React Router v7과 TypeScript로 프로젝트 초기화",
-			"complexityScore": 6,
-			"recommendedSubtasks": 6,
-			"expansionPrompt": "Break down project initialization into specific setup steps: project creation with React Router v7, TypeScript configuration, dependency installation, folder structure creation, build tool configuration, and initial testing setup.",
-			"reasoning": "Medium-high complexity due to React Router v7 being relatively new, requiring SSR/SPA hybrid configuration, and setting up multiple modern tools together. Foundation task affects all subsequent development."
-		},
-		{
-			"taskId": 2,
-			"taskTitle": "Supabase 데이터베이스 및 Drizzle ORM 구성",
-			"complexityScore": 7,
-			"recommendedSubtasks": 8,
-			"expansionPrompt": "Divide database setup into: Supabase project creation, environment configuration, Drizzle ORM installation and setup, schema definition for all tables (profiles, emotionTags, diaries, diaryTags, notificationSettings), RLS policy implementation, migration setup, client configuration with TypeScript, and connection testing.",
-			"reasoning": "High complexity due to multiple database tables, complex relationships, RLS policies for security, and integration with Drizzle ORM. Critical foundation for data layer."
-		},
-		{
-			"taskId": 3,
-			"taskTitle": "Supabase Auth를 사용한 OAuth 인증 구현",
-			"complexityScore": 8,
-			"recommendedSubtasks": 9,
-			"expansionPrompt": "Split authentication implementation into: OAuth provider configuration (Google, GitHub, Discord), Supabase Auth setup, React authentication context creation, login/logout UI components, protected route implementation, JWT token handling, session management, user profile creation flow, and authentication middleware setup.",
-			"reasoning": "High complexity involving multiple OAuth providers, complex session management, protected routes, and integration with profile system. Security-critical component requiring thorough testing."
-		},
-		{
-			"taskId": 4,
-			"taskTitle": "shadcn/ui로 핵심 UI 컴포넌트 구축",
-			"complexityScore": 5,
-			"recommendedSubtasks": 7,
-			"expansionPrompt": "Organize UI development into: shadcn/ui installation and configuration, layout components (header, navigation, sidebar), responsive design implementation, form components with validation, emotion tag selector components, modal/dialog components, and theme system setup.",
-			"reasoning": "Medium complexity with extensive UI component creation, responsive design requirements, and integration with form validation. Well-documented libraries reduce complexity."
-		},
-		{
-			"taskId": 5,
-			"taskTitle": "감정 태그 관리 시스템 개발",
-			"complexityScore": 6,
-			"recommendedSubtasks": 8,
-			"expansionPrompt": "Break down tag management into: tag CRUD operations with Drizzle, auto-tag creation logic, tag editing interface, color and icon selection, categorization system (positive/negative/neutral), usage analytics implementation, tag deletion with warnings, and search/filtering functionality.",
-			"reasoning": "Medium-high complexity with automatic tag creation logic, analytics tracking, and complex UI for tag management. Involves both backend logic and rich user interface."
-		},
-		{
-			"taskId": 6,
-			"taskTitle": "일기 항목 생성 및 관리 구축",
-			"complexityScore": 8,
-			"recommendedSubtasks": 10,
-			"expansionPrompt": "Divide diary functionality into: comprehensive form creation with all fields, multi-select emotion integration, image upload with Supabase Storage, diary CRUD operations, soft delete implementation, TypeScript schema validation, auto-save functionality, rich text editor integration, form state management, and data persistence testing.",
-			"reasoning": "High complexity due to extensive form fields, image upload integration, auto-save functionality, and complex validation requirements. Core feature with multiple technical challenges."
-		},
-		{
-			"taskId": 7,
-			"taskTitle": "일기 검색 및 필터링 시스템 구현",
-			"complexityScore": 6,
-			"recommendedSubtasks": 7,
-			"expansionPrompt": "Structure search system into: date range search implementation, emotion tag filtering, text content search using Supabase full-text search, advanced multi-criteria filtering, pagination system, sorting options, search result highlighting, and saved search presets.",
-			"reasoning": "Medium-high complexity involving full-text search, multiple filter criteria, pagination, and performance optimization. Requires integration with Supabase search capabilities."
-		},
-		{
-			"taskId": 8,
-			"taskTitle": "사용자 프로필 및 설정 관리 생성",
-			"complexityScore": 5,
-			"recommendedSubtasks": 6,
-			"expansionPrompt": "Organize profile management into: profile editing interface creation, avatar upload with Supabase Storage, settings page development, user role management, data export functionality, account deletion with cleanup, and settings synchronization.",
-			"reasoning": "Medium complexity with standard CRUD operations, file upload, and settings management. Well-established patterns reduce implementation difficulty."
-		},
-		{
-			"taskId": 9,
-			"taskTitle": "웹 푸시 알림 시스템 구현",
-			"complexityScore": 9,
-			"recommendedSubtasks": 10,
-			"expansionPrompt": "Break down notification system into: Service Worker setup, push notification configuration, permission handling, notification settings interface, time customization, smart notification logic, notification templates, scheduling system, notification history, and push subscription management with Supabase.",
-			"reasoning": "Very high complexity involving Service Workers, push notification APIs, complex scheduling logic, and integration with user behavior patterns. Requires advanced browser APIs and backend coordination."
-		},
-		{
-			"taskId": 10,
-			"taskTitle": "분석 대시보드 및 데이터 시각화 구축",
-			"complexityScore": 7,
-			"recommendedSubtasks": 9,
-			"expansionPrompt": "Structure analytics development into: emotion frequency analysis implementation, data visualization library integration (Chart.js/Recharts), pattern tracking over time, statistical summary calculations, trend analysis algorithms, analytics data export, date range filtering, responsive dashboard layout, and performance optimization for large datasets.",
-			"reasoning": "High complexity requiring data analysis algorithms, chart library integration, statistical calculations, and performance optimization. Involves complex data processing and visualization challenges."
-		}
-	]
+  "meta": {
+    "generatedAt": "2025-08-27T13:07:49.363Z",
+    "tasksAnalyzed": 10,
+    "totalTasks": 10,
+    "analysisCount": 10,
+    "thresholdScore": 5,
+    "projectName": "Task Master",
+    "usedResearch": false
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 1,
+      "taskTitle": "React Router v7과 TypeScript로 프로젝트 초기화",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down project initialization into specific setup steps: project creation with React Router v7, TypeScript configuration, dependency installation, folder structure creation, build tool configuration, and initial testing setup.",
+      "reasoning": "Medium-high complexity due to React Router v7 being relatively new, requiring SSR/SPA hybrid configuration, and setting up multiple modern tools together. Foundation task affects all subsequent development."
+    },
+    {
+      "taskId": 2,
+      "taskTitle": "Supabase 데이터베이스 및 Drizzle ORM 구성",
+      "complexityScore": 7,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Divide database setup into: Supabase project creation, environment configuration, Drizzle ORM installation and setup, schema definition for all tables (profiles, emotionTags, diaries, diaryTags, notificationSettings), RLS policy implementation, migration setup, client configuration with TypeScript, and connection testing.",
+      "reasoning": "High complexity due to multiple database tables, complex relationships, RLS policies for security, and integration with Drizzle ORM. Critical foundation for data layer."
+    },
+    {
+      "taskId": 3,
+      "taskTitle": "Supabase Auth를 사용한 OAuth 인증 구현",
+      "complexityScore": 8,
+      "recommendedSubtasks": 9,
+      "expansionPrompt": "Split authentication implementation into: OAuth provider configuration (Google, GitHub, Discord), Supabase Auth setup, React authentication context creation, login/logout UI components, protected route implementation, JWT token handling, session management, user profile creation flow, and authentication middleware setup.",
+      "reasoning": "High complexity involving multiple OAuth providers, complex session management, protected routes, and integration with profile system. Security-critical component requiring thorough testing."
+    },
+    {
+      "taskId": 4,
+      "taskTitle": "shadcn/ui로 핵심 UI 컴포넌트 구축",
+      "complexityScore": 5,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Organize UI development into: shadcn/ui installation and configuration, layout components (header, navigation, sidebar), responsive design implementation, form components with validation, emotion tag selector components, modal/dialog components, and theme system setup.",
+      "reasoning": "Medium complexity with extensive UI component creation, responsive design requirements, and integration with form validation. Well-documented libraries reduce complexity."
+    },
+    {
+      "taskId": 5,
+      "taskTitle": "감정 태그 관리 시스템 개발",
+      "complexityScore": 6,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down tag management into: tag CRUD operations with Drizzle, auto-tag creation logic, tag editing interface, color and icon selection, categorization system (positive/negative/neutral), usage analytics implementation, tag deletion with warnings, and search/filtering functionality.",
+      "reasoning": "Medium-high complexity with automatic tag creation logic, analytics tracking, and complex UI for tag management. Involves both backend logic and rich user interface."
+    },
+    {
+      "taskId": 6,
+      "taskTitle": "일기 항목 생성 및 관리 구축",
+      "complexityScore": 8,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Divide diary functionality into: comprehensive form creation with all fields, multi-select emotion integration, image upload with Supabase Storage, diary CRUD operations, soft delete implementation, TypeScript schema validation, auto-save functionality, rich text editor integration, form state management, and data persistence testing.",
+      "reasoning": "High complexity due to extensive form fields, image upload integration, auto-save functionality, and complex validation requirements. Core feature with multiple technical challenges."
+    },
+    {
+      "taskId": 7,
+      "taskTitle": "일기 검색 및 필터링 시스템 구현",
+      "complexityScore": 6,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Structure search system into: date range search implementation, emotion tag filtering, text content search using Supabase full-text search, advanced multi-criteria filtering, pagination system, sorting options, search result highlighting, and saved search presets.",
+      "reasoning": "Medium-high complexity involving full-text search, multiple filter criteria, pagination, and performance optimization. Requires integration with Supabase search capabilities."
+    },
+    {
+      "taskId": 8,
+      "taskTitle": "사용자 프로필 및 설정 관리 생성",
+      "complexityScore": 5,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Organize profile management into: profile editing interface creation, avatar upload with Supabase Storage, settings page development, user role management, data export functionality, account deletion with cleanup, and settings synchronization.",
+      "reasoning": "Medium complexity with standard CRUD operations, file upload, and settings management. Well-established patterns reduce implementation difficulty."
+    },
+    {
+      "taskId": 9,
+      "taskTitle": "웹 푸시 알림 시스템 구현",
+      "complexityScore": 9,
+      "recommendedSubtasks": 10,
+      "expansionPrompt": "Break down notification system into: Service Worker setup, push notification configuration, permission handling, notification settings interface, time customization, smart notification logic, notification templates, scheduling system, notification history, and push subscription management with Supabase.",
+      "reasoning": "Very high complexity involving Service Workers, push notification APIs, complex scheduling logic, and integration with user behavior patterns. Requires advanced browser APIs and backend coordination."
+    },
+    {
+      "taskId": 10,
+      "taskTitle": "분석 대시보드 및 데이터 시각화 구축",
+      "complexityScore": 7,
+      "recommendedSubtasks": 9,
+      "expansionPrompt": "Structure analytics development into: emotion frequency analysis implementation, data visualization library integration (Chart.js/Recharts), pattern tracking over time, statistical summary calculations, trend analysis algorithms, analytics data export, date range filtering, responsive dashboard layout, and performance optimization for large datasets.",
+      "reasoning": "High complexity requiring data analysis algorithms, chart library integration, statistical calculations, and performance optimization. Involves complex data processing and visualization challenges."
+    }
+  ]
 }
