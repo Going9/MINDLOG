@@ -64,10 +64,6 @@ CREATE TABLE "profiles" (
 	CONSTRAINT "profiles_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-CREATE TABLE "auth"."users" (
-	"id" uuid PRIMARY KEY NOT NULL
-);
---> statement-breakpoint
 ALTER TABLE "diaries" ADD CONSTRAINT "diaries_profile_id_profiles_id_fk" FOREIGN KEY ("profile_id") REFERENCES "public"."profiles"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "diary_tags" ADD CONSTRAINT "diary_tags_diary_id_diaries_id_fk" FOREIGN KEY ("diary_id") REFERENCES "public"."diaries"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "diary_tags" ADD CONSTRAINT "diary_tags_emotion_tag_id_emotion_tags_id_fk" FOREIGN KEY ("emotion_tag_id") REFERENCES "public"."emotion_tags"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
