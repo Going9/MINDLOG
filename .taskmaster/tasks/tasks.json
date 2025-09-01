@@ -81,98 +81,98 @@
         "id": 2,
         "title": "Supabase 데이터베이스 및 Drizzle ORM 구성",
         "description": "Supabase 프로젝트 설정, 데이터베이스 스키마 구성 및 Drizzle ORM 통합",
-        "details": "Create Supabase project and configure environment variables. Install Drizzle ORM and related packages. Define database schema with tables: profiles, emotionTags, diaries, diaryTags, notificationSettings. Implement RLS policies for data isolation. Set up database migrations and connection configuration. Configure Supabase client with proper TypeScript types.",
-        "testStrategy": "Test database connection, run migrations successfully, verify RLS policies work correctly, and ensure type safety with Drizzle queries.",
-        "priority": "high",
+        "status": "done",
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "priority": "high",
+        "details": "Create Supabase project and configure environment variables. Install Drizzle ORM and related packages. Define database schema with tables: profiles, emotionTags, diaries, diaryTags, notificationSettings. Implement RLS policies for data isolation. Set up database migrations and connection configuration with restructured migration system (app/sql/migrations). Configure Supabase client with proper TypeScript types.",
+        "testStrategy": "Test database connection, run migrations successfully from new app/sql/migrations structure, verify RLS policies work correctly, and ensure type safety with Drizzle queries.",
         "subtasks": [
           {
             "id": 1,
             "title": "Supabase 프로젝트 생성 및 초기 설정",
             "description": "새 Supabase 프로젝트를 생성하고 기본 설정을 구성",
+            "status": "done",
             "dependencies": [],
             "details": "Create new Supabase project through dashboard, obtain project URL and anon key, set up basic project configuration and settings",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 2,
             "title": "환경 변수 및 Supabase 클라이언트 구성",
             "description": "환경 변수 설정 및 Supabase 클라이언트 초기화",
+            "status": "done",
             "dependencies": [
-              "2.1"
+              1
             ],
             "details": "Configure .env files with Supabase URL and keys, create Supabase client configuration with TypeScript types, set up environment-specific configurations",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 3,
             "title": "Drizzle ORM 및 관련 패키지 설치",
             "description": "Drizzle ORM과 필요한 종속성 패키지들을 설치",
+            "status": "done",
             "dependencies": [
-              "2.2"
+              2
             ],
             "details": "Install drizzle-orm, @supabase/supabase-js, drizzle-kit, and postgres driver. Configure package.json scripts for database operations",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 4,
             "title": "데이터베이스 스키마 정의",
             "description": "모든 테이블의 스키마를 Drizzle로 정의",
+            "status": "done",
             "dependencies": [
-              "2.3"
+              3
             ],
             "details": "Define schemas for profiles, emotionTags, diaries, diaryTags, and notificationSettings tables with proper relationships, constraints, and TypeScript types",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 5,
             "title": "RLS 정책 구현",
             "description": "데이터 보안을 위한 Row Level Security 정책 설정",
+            "status": "done",
             "dependencies": [
-              "2.4"
+              4
             ],
             "details": "Implement RLS policies for all tables to ensure users can only access their own data, configure authentication-based access controls",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 6,
-            "title": "데이터베이스 마이그레이션 설정",
-            "description": "마이그레이션 시스템 구성 및 초기 마이그레이션 생성",
+            "title": "재구성된 마이그레이션 시스템 설정 완료 검증",
+            "description": "app/sql/migrations로 이동된 마이그레이션 구조 및 업데이트된 drizzle.config.ts 검증",
+            "status": "done",
             "dependencies": [
-              "2.5"
+              5
             ],
-            "details": "Set up Drizzle migration system, create initial migration files, configure migration scripts and deployment process",
-            "status": "pending",
-            "testStrategy": ""
+            "details": "Verify the restructured migration system in app/sql/migrations directory is working correctly. Confirm drizzle.config.ts has been properly updated to reference the new migration path. Validate that trigger files have been created and all changes are properly committed. Test migration generation and execution from the new structure.\n<info added on 2025-09-01T06:23:29.502Z>\n마이그레이션 시스템 재구성 작업이 성공적으로 완료되었습니다. 디렉토리 구조가 app/migrations/에서 app/sql/migrations/로 변경되었고, 모든 기존 마이그레이션 파일과 meta/ 디렉토리가 새 위치로 이동되었습니다. drizzle.config.ts 파일의 output 경로가 './app/sql/migrations'로 업데이트되었으며, 스키마 경로는 기존대로 './app/features/**/schema.ts'를 유지합니다. 트리거 파일 app/sql/triggers/user_to_profile_triggers.sql이 생성되었고, 모든 변경사항이 커밋 6eee5e5 \"refactor: reorganize database migrations and update drizzle config\"로 Git에 저장되었습니다. 새로운 마이그레이션 구조가 올바르게 설정되어 다음 단계인 데이터베이스 연결 구성을 진행할 준비가 완료되었습니다.\n</info added on 2025-09-01T06:23:29.502Z>",
+            "testStrategy": "Run migration commands to ensure they work with the new directory structure, verify drizzle.config.ts points to correct migration path, and confirm trigger files are accessible"
           },
           {
             "id": 7,
             "title": "데이터베이스 연결 구성",
             "description": "Drizzle과 Supabase 간의 연결 설정",
+            "status": "done",
             "dependencies": [
-              "2.6"
+              6
             ],
             "details": "Configure database connection with Drizzle, set up connection pooling, implement error handling and retry logic",
-            "status": "pending",
             "testStrategy": ""
           },
           {
             "id": 8,
             "title": "연결 테스트 및 검증",
             "description": "데이터베이스 연결 및 설정 전체의 테스트 및 검증",
+            "status": "done",
             "dependencies": [
-              "2.7"
+              7
             ],
-            "details": "Test database connectivity, run sample queries, verify RLS policies work correctly, validate TypeScript type generation, and ensure migration system functions properly",
-            "status": "pending",
+            "details": "Test database connectivity, run sample queries, verify RLS policies work correctly, validate TypeScript type generation, and ensure migration system functions properly from the new app/sql/migrations structure",
             "testStrategy": ""
           }
         ]
@@ -1011,7 +1011,7 @@
     ],
     "metadata": {
       "created": "2025-08-27T12:39:58.090Z",
-      "updated": "2025-08-27T23:29:11.752Z",
+      "updated": "2025-09-01T06:25:39.678Z",
       "description": "Tasks for master context"
     }
   }
