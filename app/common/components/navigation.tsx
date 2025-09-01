@@ -10,6 +10,35 @@ import {
   navigationMenuTriggerStyle,
 } from "./ui/navigation-menu";
 import { cn } from "~/lib/utils";
+import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import {
+  BarChart3Icon,
+  BellIcon,
+  LogOutIcon,
+  MenuIcon,
+  SettingsIcon,
+  UserIcon,
+  XIcon,
+} from "lucide-react";
+import { useState } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "./ui/sheet";
 
 const menus = [
   {
@@ -51,15 +80,129 @@ const menus = [
   },
 ];
 
-export default function Navigation() {
+export default function Navigation({
+  isLoggedIn,
+  hasNotifications,
+}: {
+  isLoggedIn: boolean;
+  hasNotifications: boolean;
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const MobileMenu = () => (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button variant='ghost' size='icon' className='md:hidden'>
+          <MenuIcon className='size-5' />
+        </Button>
+      </SheetTrigger>
+      <SheetContent side='right' className='w-80'>
+        <div className='flex flex-col gap-4 mt-8 px-3'>
+          {menus.map(menu => (
+            <div key={menu.name} className='space-y-2'>
+              <Link
+                to={menu.to}
+                className='text-lg font-medium block py-2'
+                onClick={() => setIsOpen(false)}
+              >
+                {menu.name}
+              </Link>
+              {menu.items && (
+                <div className='ml-4 space-y-2'>
+                  {menu.items.map(item => (
+                    <Link
+                      key={item.name}
+                      to={item.to}
+                      className='block text-sm text-muted-foreground py-1 hover:text-foreground'
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+
+          <Separator className='my-4' />
+
+          {isLoggedIn ? (
+            <div className='space-y-3'>
+              <Link
+                to='/notifications'
+                className='flex items-center gap-3 py-2'
+                onClick={() => setIsOpen(false)}
+              >
+                <BellIcon className='size-4' />
+                <span>알림</span>
+                {hasNotifications && (
+                  <div className='size-2 bg-red-500 rounded-full' />
+                )}
+              </Link>
+              <Link
+                to='/dashboard'
+                className='flex items-center gap-3 py-2'
+                onClick={() => setIsOpen(false)}
+              >
+                <BarChart3Icon className='size-4' />
+                <span>대시보드</span>
+              </Link>
+              <Link
+                to='/profile'
+                className='flex items-center gap-3 py-2'
+                onClick={() => setIsOpen(false)}
+              >
+                <UserIcon className='size-4' />
+                <span>프로필</span>
+              </Link>
+              <Link
+                to='/settings'
+                className='flex items-center gap-3 py-2'
+                onClick={() => setIsOpen(false)}
+              >
+                <SettingsIcon className='size-4' />
+                <span>설정</span>
+              </Link>
+              <Separator className='my-2' />
+              <Link
+                to='/auth/logout'
+                className='flex items-center gap-3 py-2 text-red-600'
+                onClick={() => setIsOpen(false)}
+              >
+                <LogOutIcon className='size-4' />
+                <span>로그아웃</span>
+              </Link>
+            </div>
+          ) : (
+            <div className='space-y-3'>
+              <Button asChild variant='secondary' className='w-full'>
+                <Link to='/auth/login' onClick={() => setIsOpen(false)}>
+                  로그인
+                </Link>
+              </Button>
+              <Button asChild className='w-full'>
+                <Link to='/auth/register' onClick={() => setIsOpen(false)}>
+                  회원가입
+                </Link>
+              </Button>
+            </div>
+          )}
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+
   return (
-    <nav className='flex px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50'>
+    <nav className='flex px-4 md:px-20 h-16 items-center justify-between backdrop-blur fixed top-0 left-0 right-0 z-50 bg-background/50'>
       <div className='flex items-center'>
         <Link to='/' className='font-bold tracking-tighter text-lg'>
           MINDLOG
         </Link>
-        <Separator orientation='vertical' className='!h-6 mx-4' />
-        <NavigationMenu>
+        <Separator
+          orientation='vertical'
+          className='!h-6 mx-4 hidden md:block'
+        />
+        <NavigationMenu className='hidden md:block'>
           <NavigationMenuList>
             {menus.map(menu => (
               <NavigationMenuItem key={menu.name}>
@@ -71,7 +214,7 @@ export default function Navigation() {
                     <NavigationMenuContent>
                       <ul className='grid w-[600px] font-light gap-3 p-4 grid-cols-2'>
                         {menu.items?.map(item => (
-                          <li
+                          <NavigationMenuItem
                             key={item.name}
                             className={cn([
                               "select-none rounded-md transition-colors focus:bg-accent  hover:bg-accent",
@@ -79,7 +222,7 @@ export default function Navigation() {
                                 "col-span-2 bg-primary/10 hover:bg-primary/20 focus:bg-primary/20",
                             ])}
                           >
-                            <NavigationMenuLink asChild>
+                            <NavigationMenuLink>
                               <Link
                                 className='p-3 space-y-1 block leading-none no-underline outline-none'
                                 to={item.to}
@@ -92,7 +235,7 @@ export default function Navigation() {
                                 </p>
                               </Link>
                             </NavigationMenuLink>
-                          </li>
+                          </NavigationMenuItem>
                         ))}
                       </ul>
                     </NavigationMenuContent>
@@ -107,6 +250,78 @@ export default function Navigation() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
+
+      {/* Desktop Menu */}
+      <div className='hidden md:flex items-center gap-4'>
+        {isLoggedIn ? (
+          <>
+            <Button size='icon' variant='ghost' asChild className='relative'>
+              <Link to='/notifications'>
+                <BellIcon className='size-4' />
+                {hasNotifications && (
+                  <div className='absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full' />
+                )}
+              </Link>
+            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Avatar>
+                  <AvatarImage src='https://github.com/serranoarevalo.png' />
+                  <AvatarFallback>U</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className='w-56'>
+                <DropdownMenuLabel className='flex flex-col'>
+                  <span className='font-medium'>사용자</span>
+                  <span className='text-xs text-muted-foreground'>
+                    @username
+                  </span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild className='cursor-pointer'>
+                    <Link to='/dashboard'>
+                      <BarChart3Icon className='size-4 mr-2' />
+                      대시보드
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className='cursor-pointer'>
+                    <Link to='/profile'>
+                      <UserIcon className='size-4 mr-2' />
+                      프로필
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className='cursor-pointer'>
+                    <Link to='/settings'>
+                      <SettingsIcon className='size-4 mr-2' />
+                      설정
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild className='cursor-pointer'>
+                  <Link to='/auth/logout'>
+                    <LogOutIcon className='size-4 mr-2' />
+                    로그아웃
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ) : (
+          <>
+            <Button asChild variant='secondary'>
+              <Link to='/auth/login'>로그인</Link>
+            </Button>
+            <Button asChild>
+              <Link to='/auth/register'>회원가입</Link>
+            </Button>
+          </>
+        )}
+      </div>
+
+      {/* Mobile Menu */}
+      <MobileMenu />
     </nav>
   );
 }
