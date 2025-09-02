@@ -28,6 +28,7 @@ INSERT INTO "diaries" ("profile_id", "date", "short_content", "situation", "reac
 ('b0e0e902-3488-4c10-9621-fffde048923c', '2025-09-09', '가족과 함께한 따뜻한 저녁', '오랜만에 가족 모두가 함께 저녁을 먹었다.', '평범하지만 소중한 시간이었다.', '편안함', '가족과의 시간을 더 많이 보내는 것', '사랑하는 가족이 있음에 감사', '가족은 너의 힘이야'),
 ('b0e0e902-3488-4c10-9621-fffde048923c', '2025-09-11', '운동을 시작한 첫날', '헬스장에 등록하고 첫 운동을 했다.', '몸은 힘들었지만 기분이 좋았다.', '근육통', '꾸준히 운동하는 습관을 들이는 것', '건강을 챙길 수 있음에 감사', '시작이 반이다, 잘했어!');
 
+
 -- Diary Tags (linking diaries and emotion_tags)
 -- Assuming diary_id and emotion_tag_id start from 1 and increment
 INSERT INTO "diary_tags" ("diary_id", "emotion_tag_id") VALUES
