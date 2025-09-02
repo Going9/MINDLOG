@@ -18,11 +18,10 @@ const users = pgSchema("auth").table("users", {
 export const profiles = pgTable("profiles", {
   id: uuid("id")
     .primaryKey()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   avatar: text("avatar"),
   name: text("name").notNull(),
   userName: text("user_name").notNull().unique(),
-  email: text("email").notNull().unique(),
   role: userRoleEnum("role").default("user").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .defaultNow()

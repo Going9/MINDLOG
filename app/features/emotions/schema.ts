@@ -23,9 +23,9 @@ export const emotionTags = pgTable(
     id: bigint("id", { mode: "number" })
       .primaryKey()
       .generatedAlwaysAsIdentity(),
-    profileId: uuid("profile_id")
-      .notNull()
-      .references(() => profiles.id, { onDelete: "cascade" }),
+    profileId: uuid("profile_id").references(() => profiles.id, {
+      onDelete: "cascade",
+    }),
     name: text("name").notNull(),
     color: text("color").default("#6B7280"),
     category: emotionCategoryEnum("category").default("neutral"),

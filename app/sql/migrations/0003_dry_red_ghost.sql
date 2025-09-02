@@ -1,0 +1,1 @@
+ALTER TABLE "emotion_tags" ALTER COLUMN "profile_id" DROP NOT NULL;
