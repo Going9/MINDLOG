@@ -28,13 +28,13 @@ import { Card, CardContent } from "~/common/components/ui/card";
 interface EmotionTag {
   id: number;
   name: string;
-  color: string;
-  category: "positive" | "negative" | "neutral";
-  isDefault: boolean;
+  color: string | null;
+  category: "positive" | "negative" | "neutral" | null;
+  isDefault: boolean | null;
 }
 
 interface DiaryEntry {
-  id: string;
+  id: number;
   date: Date;
   emotionTags: EmotionTag[];
   completedSteps: number;

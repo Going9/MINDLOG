@@ -47,9 +47,10 @@ import {
 interface EmotionTag {
   id: number;
   name: string;
-  color: string;
-  category: "positive" | "negative" | "neutral";
-  isDefault: boolean;
+  color: string | null;
+  category: "positive" | "negative" | "neutral" | null;
+  isDefault: boolean | null;
+  usageCount?: number | null;
 }
 
 // 부모로부터 받아야 할 props(속성) 정의

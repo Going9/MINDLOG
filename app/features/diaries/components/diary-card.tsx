@@ -57,21 +57,21 @@ import { cn } from "~/lib/utils"; // 여러 개의 CSS 클래스를 조건부로
 interface EmotionTag {
   id: number;
   name: string;
-  color: string;
-  category: "positive" | "negative" | "neutral";
-  isDefault: boolean;
+  color: string | null;
+  category: "positive" | "negative" | "neutral" | null;
+  isDefault: boolean | null;
 }
 
 interface DiaryEntry {
-  id: string;
+  id: number;
   date: Date;
-  shortContent?: string;
-  situation?: string;
-  reaction?: string;
-  physicalSensation?: string;
-  desiredReaction?: string;
-  gratitudeMoment?: string;
-  selfKindWords?: string;
+  shortContent: string | null;
+  situation: string | null;
+  reaction: string | null;
+  physicalSensation: string | null;
+  desiredReaction: string | null;
+  gratitudeMoment: string | null;
+  selfKindWords: string | null;
   emotionTags: EmotionTag[];
   completedSteps: number;
   totalSteps: number;
@@ -80,14 +80,15 @@ interface DiaryEntry {
 // 부모로부터 받아야 할 props(속성) 정의
 interface DiaryCardProps {
   entry: DiaryEntry; // 표시할 일기 데이터 객체
-  onEdit: (id: string) => void; // 수정 버튼 클릭 시 호출될 함수
-  onDelete: (id: string) => void; // 삭제 버튼 클릭 시 호출될 함수
-  onView: (id: string) => void; // 보기 버튼 클릭 시 호출될 함수
+  onEdit: (id: number) => void; // 수정 버튼 클릭 시 호출될 함수
+  onDelete: (id: number) => void; // 삭제 버튼 클릭 시 호출될 함수
+  onView: (id: number) => void; // 보기 버튼 클릭 시 호출될 함수
 }
 
 export function DiaryCard({ entry, onEdit, onDelete, onView }: DiaryCardProps) {
   // props로 받은 entry 객체에서 필요한 값들을 구조 분해 할당으로 추출합니다.
   const {
+    id,
     date,
     shortContent,
     situation,
@@ -126,16 +127,16 @@ export function DiaryCard({ entry, onEdit, onDelete, onView }: DiaryCardProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align='end'>
-              <DropdownMenuItem onClick={() => onView(entry.id)}>
+              <DropdownMenuItem onClick={() => onView(id)}>
                 <EyeIcon className='w-4 h-4 mr-2' />
                 보기
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => onEdit(entry.id)}>
+              <DropdownMenuItem onClick={() => onEdit(id)}>
                 <EditIcon className='w-4 h-4 mr-2' />
                 수정
               </DropdownMenuItem>
               <DropdownMenuItem
-                onClick={() => onDelete(entry.id)}
+                onClick={() => onDelete(id)}
                 className='text-destructive focus:text-destructive'
               >
                 <TrashIcon className='w-4 h-4 mr-2' />
@@ -154,7 +155,7 @@ export function DiaryCard({ entry, onEdit, onDelete, onView }: DiaryCardProps) {
               {emotionTags.slice(0, 4).map(tag => (
                 <Badge
                   key={tag.id}
-                  style={{ backgroundColor: tag.color }}
+                  style={{ backgroundColor: tag.color || "#6B7280" }}
                   className='text-white text-xs h-6 px-2'
                 >
                   {tag.name}
@@ -227,7 +228,7 @@ export function DiaryCard({ entry, onEdit, onDelete, onView }: DiaryCardProps) {
             variant='ghost'
             size='sm'
             className='flex-1'
-            onClick={() => onEdit(entry.id)}
+            onClick={() => onEdit(id)}
           >
             <EditIcon className='w-4 h-4 mr-2' />
             {isComplete ? "수정" : "계속 쓰기"}
