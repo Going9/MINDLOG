@@ -44,7 +44,8 @@ import type { Route } from "./+types/diary-list";
 // Loader for data fetching with URL search params support
 export const loader = async ({ request }: { request: Request }) => {
   // TODO: 실제 인증 시스템 구현시 세션에서 profileId 가져오기
-  // 현재는 하드코딩된 프로필 ID 사용 (Supabase에 등록된 프로필)
+  // 현재는 하드코딩된 프로필 ID
+  // 사용 (Supabase에 등록된 프로필)
   const profileId = "b0e0e902-3488-4c10-9621-fffde048923c";
 
   // Parse URL search params for server-side filtering
@@ -174,28 +175,40 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
   );
 
   // Filter handlers
-  const handleSearchChange = useCallback((query: string) => {
-    setSearchQuery(query);
-    updateUrlParams({ search: query || undefined });
-  }, [updateUrlParams]);
+  const handleSearchChange = useCallback(
+    (query: string) => {
+      setSearchQuery(query);
+      updateUrlParams({ search: query || undefined });
+    },
+    [updateUrlParams]
+  );
 
-  const handleSortChange = useCallback((sort: string) => {
-    setSortBy(sort);
-    updateUrlParams({ sortBy: sort });
-  }, [updateUrlParams]);
+  const handleSortChange = useCallback(
+    (sort: string) => {
+      setSortBy(sort);
+      updateUrlParams({ sortBy: sort });
+    },
+    [updateUrlParams]
+  );
 
-  const handleEmotionFilterChange = useCallback((emotion?: EmotionTagType) => {
-    setSelectedEmotionFilter(emotion);
-    updateUrlParams({ emotionTagId: emotion?.id.toString() });
-  }, [updateUrlParams]);
+  const handleEmotionFilterChange = useCallback(
+    (emotion?: EmotionTagType) => {
+      setSelectedEmotionFilter(emotion);
+      updateUrlParams({ emotionTagId: emotion?.id.toString() });
+    },
+    [updateUrlParams]
+  );
 
-  const handleDateSelect = useCallback((date: Date | undefined) => {
-    setSelectedDate(date);
-    updateUrlParams({ 
-      dateFrom: date?.toISOString().split('T')[0],
-      dateTo: date?.toISOString().split('T')[0] 
-    });
-  }, [updateUrlParams]);
+  const handleDateSelect = useCallback(
+    (date: Date | undefined) => {
+      setSelectedDate(date);
+      updateUrlParams({
+        dateFrom: date?.toISOString().split("T")[0],
+        dateTo: date?.toISOString().split("T")[0],
+      });
+    },
+    [updateUrlParams]
+  );
 
   // Clear all filters
   const clearFilters = useCallback(() => {
@@ -204,7 +217,7 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
     setSelectedEmotionFilter(undefined);
     setCompletionFilter("all");
     setSelectedDate(undefined);
-    
+
     navigate(window.location.pathname, { replace: true });
   }, [navigate]);
 
@@ -326,25 +339,29 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
                 <div className='flex justify-center items-center gap-4 mt-8'>
                   {pagination.currentPage > 1 && (
                     <Button
-                      variant="outline"
-                      onClick={() => updateUrlParams({ 
-                        page: (pagination.currentPage - 1).toString() 
-                      })}
+                      variant='outline'
+                      onClick={() =>
+                        updateUrlParams({
+                          page: (pagination.currentPage - 1).toString(),
+                        })
+                      }
                     >
                       이전 페이지
                     </Button>
                   )}
-                  
+
                   <span className='text-sm text-muted-foreground'>
                     페이지 {pagination.currentPage}
                   </span>
-                  
+
                   {pagination.hasNextPage && (
                     <Button
-                      variant="outline"
-                      onClick={() => updateUrlParams({ 
-                        page: (pagination.currentPage + 1).toString() 
-                      })}
+                      variant='outline'
+                      onClick={() =>
+                        updateUrlParams({
+                          page: (pagination.currentPage + 1).toString(),
+                        })
+                      }
                     >
                       다음 페이지
                     </Button>
