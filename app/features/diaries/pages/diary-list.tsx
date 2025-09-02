@@ -21,8 +21,8 @@
  * - 완성도(completion) 계산은 일기의 7개 핵심 필드(shortContent, situation, reaction, physicalSensation, desiredReaction, gratitudeMoment, selfKindWords)를 기반으로 합니다.
  */
 
-import { useState, useMemo } from "react";
-import { Link } from "react-router";
+import { useState, useMemo, useCallback } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -41,27 +41,68 @@ import { getDiaries } from "../queries";
 import { getEmotionTags } from "../../emotions/queries";
 import type { Route } from "./+types/diary-list";
 
-// Loader for data fetching
-export const loader = async () => {
+// Loader for data fetching with URL search params support
+export const loader = async ({ request }: { request: Request }) => {
   // TODO: 실제 인증 시스템 구현시 세션에서 profileId 가져오기
   // 현재는 하드코딩된 프로필 ID 사용 (Supabase에 등록된 프로필)
   const profileId = "b0e0e902-3488-4c10-9621-fffde048923c";
 
+  // Parse URL search params for server-side filtering
+  const url = new URL(request.url);
+  const searchQuery = url.searchParams.get("search") || undefined;
+  const sortBy = (url.searchParams.get("sortBy") as any) || "date-desc";
+  const emotionTagId = url.searchParams.get("emotionTagId")
+    ? parseInt(url.searchParams.get("emotionTagId")!)
+    : undefined;
+  const page = parseInt(url.searchParams.get("page") || "1");
+  const limit = parseInt(url.searchParams.get("limit") || "20");
+  const offset = (page - 1) * limit;
+
+  // Date filters
+  const dateFrom = url.searchParams.get("dateFrom")
+    ? new Date(url.searchParams.get("dateFrom")!)
+    : undefined;
+  const dateTo = url.searchParams.get("dateTo")
+    ? new Date(url.searchParams.get("dateTo")!)
+    : undefined;
+
   const [diaries, emotionTags] = await Promise.all([
-    getDiaries({ profileId }),
+    getDiaries({
+      profileId,
+      searchQuery,
+      sortBy,
+      emotionTagId,
+      dateFrom,
+      dateTo,
+      limit,
+      offset,
+    }),
     getEmotionTags(profileId),
   ]);
 
-  return { diaries, emotionTags };
+  return {
+    diaries,
+    emotionTags,
+    pagination: {
+      currentPage: page,
+      limit,
+      hasNextPage: diaries.length === limit,
+    },
+    filters: {
+      searchQuery,
+      sortBy,
+      emotionTagId,
+      dateFrom: dateFrom?.toISOString(),
+      dateTo: dateTo?.toISOString(),
+    },
+  };
 };
 
-
 export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
-  const { diaries, emotionTags } = loaderData;
-  
-  // Filter and search states
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState("date-desc");
+  const { diaries, emotionTags, pagination, filters } = loaderData;
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   type EmotionTagType = {
     id: number;
     name: string;
@@ -70,45 +111,32 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
     isDefault: boolean | null;
     usageCount?: number | null;
   };
-  
+
+  // Initialize states from URL params or filters
+  const [searchQuery, setSearchQuery] = useState(filters.searchQuery || "");
+  const [sortBy, setSortBy] = useState(filters.sortBy || "date-desc");
   const [selectedEmotionFilter, setSelectedEmotionFilter] = useState<
     EmotionTagType | undefined
-  >();
-  const [completionFilter, setCompletionFilter] = useState("all");
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>();
+  >(
+    filters.emotionTagId
+      ? emotionTags.find(tag => tag.id === filters.emotionTagId)
+      : undefined
+  );
+  const [completionFilter, setCompletionFilter] = useState("all"); // Keep client-side for completion filtering
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    filters.dateFrom ? new Date(filters.dateFrom) : undefined
+  );
 
-  // Get unique emotions from all entries
+  // Get available emotions (all emotions since filtering is now server-side)
   const availableEmotions = useMemo(() => {
-    const emotionIds = new Set<number>();
-    diaries.forEach(entry => {
-      entry.emotionTags.forEach(tag => emotionIds.add(tag.id));
-    });
-    return emotionTags.filter(emotion => emotionIds.has(emotion.id)) as EmotionTagType[];
-  }, [diaries, emotionTags]);
+    return emotionTags as EmotionTagType[];
+  }, [emotionTags]);
 
-  // Filter and sort entries
+  // Apply only client-side completion filter (server doesn't handle this yet)
   const filteredAndSortedEntries = useMemo(() => {
     let filtered = [...diaries];
 
-    // Apply search filter
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        entry =>
-          entry.shortContent?.toLowerCase().includes(query) ||
-          entry.situation?.toLowerCase().includes(query) ||
-          entry.reaction?.toLowerCase().includes(query)
-      );
-    }
-
-    // Apply emotion filter
-    if (selectedEmotionFilter) {
-      filtered = filtered.filter(entry =>
-        entry.emotionTags.some(tag => tag.id === selectedEmotionFilter.id)
-      );
-    }
-
-    // Apply completion filter
+    // Apply completion filter (only client-side filter remaining)
     if (completionFilter === "complete") {
       filtered = filtered.filter(
         entry => (entry as any).completedSteps === (entry as any).totalSteps
@@ -119,54 +147,66 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
       );
     }
 
-    // Apply date filter
-    if (selectedDate) {
-      filtered = filtered.filter(
-        entry =>
-          new Date(entry.date).toDateString() === selectedDate.toDateString()
-      );
-    }
-
-    // Sort entries
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case "date-asc":
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
-        case "date-desc":
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        case "completion-asc":
-          return (
-            (a as any).completedSteps / (a as any).totalSteps - 
-            (b as any).completedSteps / (b as any).totalSteps
-          );
-        case "completion-desc":
-          return (
-            (b as any).completedSteps / (b as any).totalSteps - 
-            (a as any).completedSteps / (a as any).totalSteps
-          );
-        default:
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-      }
-    });
-
     return filtered;
-  }, [
-    diaries,
-    searchQuery,
-    selectedEmotionFilter,
-    completionFilter,
-    selectedDate,
-    sortBy,
-  ]);
+  }, [diaries, completionFilter]);
+
+  // URL navigation helper
+  const updateUrlParams = useCallback(
+    (newParams: Record<string, string | undefined>) => {
+      const url = new URL(window.location.href);
+
+      Object.entries(newParams).forEach(([key, value]) => {
+        if (value) {
+          url.searchParams.set(key, value);
+        } else {
+          url.searchParams.delete(key);
+        }
+      });
+
+      // Reset to page 1 when filters change
+      if (Object.keys(newParams).some(key => key !== "page")) {
+        url.searchParams.set("page", "1");
+      }
+
+      navigate(url.pathname + url.search, { replace: true });
+    },
+    [navigate]
+  );
+
+  // Filter handlers
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+    updateUrlParams({ search: query || undefined });
+  }, [updateUrlParams]);
+
+  const handleSortChange = useCallback((sort: string) => {
+    setSortBy(sort);
+    updateUrlParams({ sortBy: sort });
+  }, [updateUrlParams]);
+
+  const handleEmotionFilterChange = useCallback((emotion?: EmotionTagType) => {
+    setSelectedEmotionFilter(emotion);
+    updateUrlParams({ emotionTagId: emotion?.id.toString() });
+  }, [updateUrlParams]);
+
+  const handleDateSelect = useCallback((date: Date | undefined) => {
+    setSelectedDate(date);
+    updateUrlParams({ 
+      dateFrom: date?.toISOString().split('T')[0],
+      dateTo: date?.toISOString().split('T')[0] 
+    });
+  }, [updateUrlParams]);
 
   // Clear all filters
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setSearchQuery("");
     setSortBy("date-desc");
     setSelectedEmotionFilter(undefined);
     setCompletionFilter("all");
     setSelectedDate(undefined);
-  };
+    
+    navigate(window.location.pathname, { replace: true });
+  }, [navigate]);
 
   // Entry actions
   const handleEdit = (id: number) => {
@@ -225,7 +265,7 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
             <DiaryCalendar
               entries={diaries.map(d => ({ ...d, date: new Date(d.date) }))}
               selectedDate={selectedDate}
-              onDateSelect={setSelectedDate}
+              onDateSelect={handleDateSelect}
             />
             {/* Mobile New Diary Button */}
             <Button asChild size='lg' className='w-full sm:hidden'>
@@ -241,11 +281,11 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
           {/* Filters */}
           <DiaryFilters
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
+            onSearchChange={handleSearchChange}
             sortBy={sortBy}
-            onSortChange={setSortBy}
+            onSortChange={handleSortChange}
             selectedEmotionFilter={selectedEmotionFilter}
-            onEmotionFilterChange={setSelectedEmotionFilter}
+            onEmotionFilterChange={handleEmotionFilterChange}
             completionFilter={completionFilter}
             onCompletionFilterChange={setCompletionFilter}
             availableEmotions={availableEmotions}
@@ -268,17 +308,50 @@ export default function DiaryListPage({ loaderData }: Route.ComponentProps) {
               onClearFilters={clearFilters}
             />
           ) : (
-            <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
-              {filteredAndSortedEntries.map(entry => (
-                <DiaryCard
-                  key={entry.id}
-                  entry={{ ...entry, date: new Date(entry.date) }}
-                  onEdit={handleEdit}
-                  onDelete={handleDelete}
-                  onView={handleView}
-                />
-              ))}
-            </div>
+            <>
+              <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6'>
+                {filteredAndSortedEntries.map(entry => (
+                  <DiaryCard
+                    key={entry.id}
+                    entry={{ ...entry, date: new Date(entry.date) }}
+                    onEdit={handleEdit}
+                    onDelete={handleDelete}
+                    onView={handleView}
+                  />
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {diaries.length === pagination.limit && (
+                <div className='flex justify-center items-center gap-4 mt-8'>
+                  {pagination.currentPage > 1 && (
+                    <Button
+                      variant="outline"
+                      onClick={() => updateUrlParams({ 
+                        page: (pagination.currentPage - 1).toString() 
+                      })}
+                    >
+                      이전 페이지
+                    </Button>
+                  )}
+                  
+                  <span className='text-sm text-muted-foreground'>
+                    페이지 {pagination.currentPage}
+                  </span>
+                  
+                  {pagination.hasNextPage && (
+                    <Button
+                      variant="outline"
+                      onClick={() => updateUrlParams({ 
+                        page: (pagination.currentPage + 1).toString() 
+                      })}
+                    >
+                      다음 페이지
+                    </Button>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
