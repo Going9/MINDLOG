@@ -40,11 +40,8 @@ export const loader = async ({ request }: { request: Request }) => {
   const offset = (page - 1) * limit;
 
   // 날짜 필터는 서버사이드로 처리
-  const dateFrom = url.searchParams.get("dateFrom")
-    ? new Date(url.searchParams.get("dateFrom")!)
-    : undefined;
-  const dateTo = url.searchParams.get("dateTo")
-    ? new Date(url.searchParams.get("dateTo")!)
+  const date = url.searchParams.get("date")
+    ? new Date(url.searchParams.get("date")!)
     : undefined;
 
   const currentYear = new Date().getFullYear();
@@ -56,8 +53,7 @@ export const loader = async ({ request }: { request: Request }) => {
       searchQuery,
       sortBy,
       emotionTagId,
-      dateFrom,
-      dateTo,
+      date,
       limit,
       offset,
     }),
@@ -79,8 +75,7 @@ export const loader = async ({ request }: { request: Request }) => {
       searchQuery,
       sortBy,
       emotionTagId,
-      dateFrom: dateFrom?.toISOString(),
-      dateTo: dateTo?.toISOString(),
+      date: date?.toISOString(),
     },
   };
 };

@@ -6,8 +6,7 @@ type GetDiariesOptions = {
   offset?: number;
   sortBy?: "date-asc" | "date-desc" | "completion-asc" | "completion-desc";
   searchQuery?: string;
-  dateFrom?: Date;
-  dateTo?: Date;
+  date?: Date;
   emotionTagId?: number;
 };
 
@@ -17,8 +16,7 @@ export const getDiaries = async ({
   offset = 0,
   sortBy = "date-desc",
   searchQuery,
-  dateFrom,
-  dateTo,
+  date,
   emotionTagId,
 }: GetDiariesOptions) => {
   // 감정 태그 필터가 있는 경우와 없는 경우를 분리하여 처리
@@ -54,12 +52,9 @@ export const getDiaries = async ({
       );
     }
 
-    // Add date range conditions
-    if (dateFrom) {
-      emotionQuery = emotionQuery.gte("date", dateFrom.toISOString().split("T")[0]);
-    }
-    if (dateTo) {
-      emotionQuery = emotionQuery.lte("date", dateTo.toISOString().split("T")[0]);
+    // Add date condition
+    if (date) {
+      emotionQuery = emotionQuery.eq("date", date.toISOString().split("T")[0]);
     }
 
     const { data: diariesData, error: diariesError } = await emotionQuery
@@ -147,12 +142,9 @@ export const getDiaries = async ({
       );
     }
 
-    // Add date range conditions
-    if (dateFrom) {
-      query = query.gte("date", dateFrom.toISOString().split("T")[0]);
-    }
-    if (dateTo) {
-      query = query.lte("date", dateTo.toISOString().split("T")[0]);
+    // Add date condition
+    if (date) {
+      query = query.eq("date", date.toISOString().split("T")[0]);
     }
 
     // Apply ordering

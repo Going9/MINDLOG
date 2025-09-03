@@ -35,7 +35,7 @@ export function useDiaryFilters(
     searchQuery?: string;
     sortBy?: string;
     emotionTagId?: number;
-    dateFrom?: string;
+    date?: string;
   },
   emotionTags: EmotionTagType[]
 ): [FilterState, FilterActions] {
@@ -54,7 +54,7 @@ export function useDiaryFilters(
   );
   const [completionFilter, setCompletionFilter] = useState("all");
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    initialFilters.dateFrom ? new Date(initialFilters.dateFrom) : undefined
+    initialFilters.date ? new Date(initialFilters.date) : undefined
   );
 
   // URL navigation helper
@@ -111,8 +111,7 @@ export function useDiaryFilters(
     (date: Date | undefined) => {
       setSelectedDate(date);
       updateUrlParams({
-        dateFrom: date?.toISOString().split("T")[0],
-        dateTo: date?.toISOString().split("T")[0],
+        date: date?.toISOString().split("T")[0],
       });
     },
     [updateUrlParams]
