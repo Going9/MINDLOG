@@ -1,7 +1,4 @@
-import db from "~/db";
-import { diaries, diaryTags } from "./schema";
-import { emotionTags } from "../emotions/schema";
-import { eq, and, desc, asc, inArray, like, or, gte, lte } from "drizzle-orm";
+import client from "~/supa-client";
 
 type GetDiariesOptions = {
   profileId: string;
@@ -14,183 +11,240 @@ type GetDiariesOptions = {
   emotionTagId?: number;
 };
 
-export const getDiaries = async ({ 
-  profileId, 
-  limit = 20, 
-  offset = 0, 
+export const getDiaries = async ({
+  profileId,
+  limit = 20,
+  offset = 0,
   sortBy = "date-desc",
   searchQuery,
   dateFrom,
   dateTo,
-  emotionTagId
+  emotionTagId,
 }: GetDiariesOptions) => {
-  
-  // Build where conditions
-  const whereConditions = [
-    eq(diaries.profileId, profileId),
-    eq(diaries.isDeleted, false)
-  ];
-  
-  // Add search condition
-  if (searchQuery) {
-    whereConditions.push(
-      or(
-        like(diaries.shortContent, `%${searchQuery}%`),
-        like(diaries.situation, `%${searchQuery}%`),
-        like(diaries.reaction, `%${searchQuery}%`)
-      )!
-    );
-  }
-  
-  // Add date range conditions
-  if (dateFrom) {
-    whereConditions.push(gte(diaries.date, dateFrom.toISOString().split('T')[0]));
-  }
-  
-  if (dateTo) {
-    whereConditions.push(lte(diaries.date, dateTo.toISOString().split('T')[0]));
-  }
-  // Build the query based on whether emotion filter is needed
-  let allDiaries;
-  
+  // 감정 태그 필터가 있는 경우와 없는 경우를 분리하여 처리
   if (emotionTagId) {
-    // Query with emotion tag filter (join required)
-    const emotionWhereConditions = [...whereConditions, eq(diaryTags.emotionTagId, emotionTagId)];
-    
-    allDiaries = await db
-      .select({
-        id: diaries.id,
-        profileId: diaries.profileId,
-        date: diaries.date,
-        shortContent: diaries.shortContent,
-        situation: diaries.situation,
-        reaction: diaries.reaction,
-        physicalSensation: diaries.physicalSensation,
-        desiredReaction: diaries.desiredReaction,
-        gratitudeMoment: diaries.gratitudeMoment,
-        selfKindWords: diaries.selfKindWords,
-        imageUrl: diaries.imageUrl,
-        isDeleted: diaries.isDeleted,
-        createdAt: diaries.createdAt,
-        updatedAt: diaries.updatedAt,
-      })
-      .from(diaries)
-      .innerJoin(diaryTags, eq(diaryTags.diaryId, diaries.id))
-      .where(and(...emotionWhereConditions))
-      .orderBy(sortBy === "date-asc" ? asc(diaries.date) : desc(diaries.date))
-      .limit(limit)
-      .offset(offset);
-  } else {
-    // Query without emotion tag filter
-    allDiaries = await db
-      .select({
-        id: diaries.id,
-        profileId: diaries.profileId,
-        date: diaries.date,
-        shortContent: diaries.shortContent,
-        situation: diaries.situation,
-        reaction: diaries.reaction,
-        physicalSensation: diaries.physicalSensation,
-        desiredReaction: diaries.desiredReaction,
-        gratitudeMoment: diaries.gratitudeMoment,
-        selfKindWords: diaries.selfKindWords,
-        imageUrl: diaries.imageUrl,
-        isDeleted: diaries.isDeleted,
-        createdAt: diaries.createdAt,
-        updatedAt: diaries.updatedAt,
-      })
-      .from(diaries)
-      .where(and(...whereConditions))
-      .orderBy(sortBy === "date-asc" ? asc(diaries.date) : desc(diaries.date))
-      .limit(limit)
-      .offset(offset);
-  }
-  
-  // Get all diary IDs to fetch emotion tags in bulk
-  const diaryIds = allDiaries.map(diary => diary.id);
-  
-  // Fetch all emotion tags for these diaries in one query
-  let allTags: Array<{
-    diaryId: number;
-    id: number;
-    name: string;
-    color: string | null;
-    category: "positive" | "negative" | "neutral" | null;
-    isDefault: boolean | null;
-  }> = [];
-  
-  if (diaryIds.length > 0) {
-    allTags = await db
-      .select({
-        diaryId: diaryTags.diaryId,
-        id: emotionTags.id,
-        name: emotionTags.name,
-        color: emotionTags.color,
-        category: emotionTags.category,
-        isDefault: emotionTags.isDefault,
-      })
-      .from(emotionTags)
-      .innerJoin(diaryTags, eq(diaryTags.emotionTagId, emotionTags.id))
-      .where(inArray(diaryTags.diaryId, diaryIds));
-  }
+    // 감정 태그 필터가 있는 경우: JOIN을 사용하여 정확한 필터링
+    let emotionQuery = client
+      .from("diaries")
+      .select(`
+        id,
+        profile_id,
+        date,
+        short_content,
+        situation,
+        reaction,
+        physical_sensation,
+        desired_reaction,
+        gratitude_moment,
+        self_kind_words,
+        image_url,
+        is_deleted,
+        created_at,
+        updated_at,
+        diary_tags!inner(emotion_tag_id)
+      `)
+      .eq("profile_id", profileId)
+      .eq("is_deleted", false)
+      .eq("diary_tags.emotion_tag_id", emotionTagId);
 
-  // Group tags by diary ID
-  const tagsByDiaryId = allTags.reduce((acc, tag) => {
-    if (!acc[tag.diaryId]) {
-      acc[tag.diaryId] = [];
+    // Add search condition
+    if (searchQuery) {
+      emotionQuery = emotionQuery.or(
+        `short_content.ilike.%${searchQuery}%,situation.ilike.%${searchQuery}%,reaction.ilike.%${searchQuery}%`
+      );
     }
-    acc[tag.diaryId].push({
-      id: tag.id,
-      name: tag.name,
-      color: tag.color,
-      category: tag.category,
-      isDefault: tag.isDefault,
-    });
-    return acc;
-  }, {} as Record<number, Array<{
-    id: number;
-    name: string;
-    color: string | null;
-    category: "positive" | "negative" | "neutral" | null;
-    isDefault: boolean | null;
-  }>>);
 
-  // Map diaries with their tags and completion data
-  let diariesWithTags = allDiaries.map((diary) => {
-    // Calculate completion based on filled fields
-    const completionFields = [
-      diary.shortContent,
-      diary.situation,
-      diary.reaction,
-      diary.physicalSensation,
-      diary.desiredReaction,
-      diary.gratitudeMoment,
-      diary.selfKindWords,
-    ];
-    
-    const completedSteps = completionFields.filter(field => 
-      field !== null && field !== undefined && field !== "" && field.trim() !== ""
-    ).length;
-    const totalSteps = completionFields.length;
+    // Add date range conditions
+    if (dateFrom) {
+      emotionQuery = emotionQuery.gte("date", dateFrom.toISOString().split("T")[0]);
+    }
+    if (dateTo) {
+      emotionQuery = emotionQuery.lte("date", dateTo.toISOString().split("T")[0]);
+    }
 
-    return {
-      ...diary,
+    const { data: diariesData, error: diariesError } = await emotionQuery
+      .order("date", { ascending: sortBy === "date-asc" })
+      .range(offset, offset + limit - 1);
+
+    if (diariesError) throw diariesError;
+
+    // 각 일기의 모든 감정 태그를 별도로 가져옴
+    const diaryIds = diariesData.map(d => d.id);
+    let allTags: any[] = [];
+
+    if (diaryIds.length > 0) {
+      const { data: tagsData, error: tagsError } = await client
+        .from("diary_tags")
+        .select(`
+          diary_id,
+          emotion_tags (
+            id,
+            name,
+            color,
+            category,
+            is_default
+          )
+        `)
+        .in("diary_id", diaryIds);
+
+      if (tagsError) throw tagsError;
+      
+      allTags = tagsData.map(tagRelation => ({
+        diary_id: tagRelation.diary_id,
+        id: (tagRelation.emotion_tags as any).id,
+        name: (tagRelation.emotion_tags as any).name,
+        color: (tagRelation.emotion_tags as any).color,
+        category: (tagRelation.emotion_tags as any).category,
+        is_default: (tagRelation.emotion_tags as any).is_default,
+      }));
+    }
+
+    // 태그를 다이어리별로 그룹화
+    const tagsByDiaryId = allTags.reduce((acc, tag) => {
+      if (!acc[tag.diary_id]) {
+        acc[tag.diary_id] = [];
+      }
+      acc[tag.diary_id].push({
+        id: tag.id,
+        name: tag.name,
+        color: tag.color,
+        category: tag.category,
+        isDefault: tag.is_default,
+      });
+      return acc;
+    }, {} as Record<number, any[]>);
+
+    return diariesData.map((diary: any) => ({
+      id: diary.id,
+      profileId: diary.profile_id,
+      date: diary.date,
+      shortContent: diary.short_content,
+      situation: diary.situation,
+      reaction: diary.reaction,
+      physicalSensation: diary.physical_sensation,
+      desiredReaction: diary.desired_reaction,
+      gratitudeMoment: diary.gratitude_moment,
+      selfKindWords: diary.self_kind_words,
+      imageUrl: diary.image_url,
+      isDeleted: diary.is_deleted,
+      createdAt: diary.created_at,
+      updatedAt: diary.updated_at,
       emotionTags: tagsByDiaryId[diary.id] || [],
-      completedSteps,
-      totalSteps,
-    };
-  });
+      completedSteps: calculateCompletedSteps(diary),
+      totalSteps: 7,
+    }));
+  } else {
+    // 감정 태그 필터가 없는 경우: 뷰를 사용
+    let query = (client as any)
+      .from("diary_with_emotion_tags")
+      .select("*")
+      .eq("profile_id", profileId);
 
-  // Apply completion sorting if needed (post-processing)
-  if (sortBy === "completion-asc" || sortBy === "completion-desc") {
-    diariesWithTags.sort((a, b) => {
-      const aCompletion = a.completedSteps / a.totalSteps;
-      const bCompletion = b.completedSteps / b.totalSteps;
-      return sortBy === "completion-asc" 
-        ? aCompletion - bCompletion 
-        : bCompletion - aCompletion;
-    });
+    // Add search condition
+    if (searchQuery) {
+      query = query.or(
+        `short_content.ilike.%${searchQuery}%,situation.ilike.%${searchQuery}%,reaction.ilike.%${searchQuery}%`
+      );
+    }
+
+    // Add date range conditions
+    if (dateFrom) {
+      query = query.gte("date", dateFrom.toISOString().split("T")[0]);
+    }
+    if (dateTo) {
+      query = query.lte("date", dateTo.toISOString().split("T")[0]);
+    }
+
+    // Apply ordering
+    if (sortBy === "date-asc" || sortBy === "date-desc") {
+      query = query.order("date", { ascending: sortBy === "date-asc" });
+    } else {
+      query = query.order("date", { ascending: false });
+    }
+
+    const { data, error } = await query.range(offset, offset + limit - 1);
+
+    if (error) throw error;
+
+    // Map the view data to match the expected format
+    let diariesWithTags = data.map((diary: any) => ({
+      id: diary.id,
+      profileId: diary.profile_id,
+      date: diary.date,
+      shortContent: diary.short_content,
+      situation: diary.situation,
+      reaction: diary.reaction,
+      physicalSensation: diary.physical_sensation,
+      desiredReaction: diary.desired_reaction,
+      gratitudeMoment: diary.gratitude_moment,
+      selfKindWords: diary.self_kind_words,
+      imageUrl: diary.image_url,
+      isDeleted: diary.is_deleted,
+      createdAt: diary.created_at,
+      updatedAt: diary.updated_at,
+      emotionTags: diary.emotion_tags || [],
+      completedSteps: diary.completed_steps,
+      totalSteps: diary.total_steps,
+    }));
+
+    // Apply completion sorting if needed (post-processing)
+    if (sortBy === "completion-asc" || sortBy === "completion-desc") {
+      diariesWithTags.sort((a: any, b: any) => {
+        const aCompletion = a.completedSteps / a.totalSteps;
+        const bCompletion = b.completedSteps / b.totalSteps;
+        return sortBy === "completion-asc"
+          ? aCompletion - bCompletion
+          : bCompletion - aCompletion;
+      });
+    }
+
+    return diariesWithTags;
+  }
+};
+
+// 캘린더용 경량 함수 - 날짜만 가져옴
+export const getDiaryDatesForCalendar = async (
+  profileId: string, 
+  year?: number
+): Promise<string[]> => {
+  let query = client
+    .from("diaries")
+    .select("date")
+    .eq("profile_id", profileId)
+    .eq("is_deleted", false);
+
+  // 년도 필터링
+  if (year) {
+    const startDate = `${year}-01-01`;
+    const endDate = `${year}-12-31`;
+    query = query.gte("date", startDate).lte("date", endDate);
   }
 
-  return diariesWithTags;
+  const { data, error } = await query;
+
+  if (error) throw error;
+
+  // 중복 제거하고 날짜 문자열만 반환
+  const uniqueDates = [...new Set(data.map(item => item.date))];
+  return uniqueDates.sort();
 };
+
+// 완료 단계 계산 함수
+function calculateCompletedSteps(diary: any): number {
+  const fields = [
+    diary.short_content,
+    diary.situation,
+    diary.reaction,
+    diary.physical_sensation,
+    diary.desired_reaction,
+    diary.gratitude_moment,
+    diary.self_kind_words,
+  ];
+
+  return fields.filter(field =>
+    field !== null &&
+    field !== undefined &&
+    field !== "" &&
+    field.trim() !== ""
+  ).length;
+}

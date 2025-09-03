@@ -20,63 +20,34 @@
  */
 
 import { useState } from "react";
-import { Badge } from "~/common/components/ui/badge";
 import { Calendar } from "~/common/components/ui/calendar";
 import { Card, CardContent } from "~/common/components/ui/card";
 
 // --- 타입 정의 (Type Definitions) ---
-interface EmotionTag {
-  id: number;
-  name: string;
-  color: string | null;
-  category: "positive" | "negative" | "neutral" | null;
-  isDefault: boolean | null;
-}
-
-interface DiaryEntry {
-  id: number;
-  date: Date;
-  emotionTags: EmotionTag[];
-  completedSteps: number;
-  totalSteps: number;
-}
+// 이제 날짜 배열만 사용하므로 복잡한 타입 정의가 필요 없음
 
 // 컴포넌트가 부모로부터 받아야 할 props(속성)를 정의합니다.
 interface DiaryCalendarProps {
-  entries: DiaryEntry[]; // 전체 일기 목록
+  diaryDates: string[]; // 일기가 있는 날짜 문자열 배열
   selectedDate?: Date; // 현재 선택된 날짜
   onDateSelect: (date: Date | undefined) => void; // 날짜를 선택했을 때 부모에게 알리는 함수
 }
 
 export function DiaryCalendar({
-  entries,
+  diaryDates,
   selectedDate,
   onDateSelect,
 }: DiaryCalendarProps) {
   // 현재 캘린더가 보여주는 월(month)을 관리하는 상태
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  // 성능 최적화를 위해 일기 목록을 날짜별로 정리한 객체를 생성합니다.
-  const entriesByDate = entries.reduce(
-    (acc, entry) => {
-      const dateKey = entry.date.toDateString();
-      if (!acc[dateKey]) {
-        acc[dateKey] = [];
-      }
-      acc[dateKey].push(entry);
-      return acc;
-    },
-    {} as Record<string, DiaryEntry[]>
-  );
+  // 일기가 있는 날짜를 Set으로 변환해서 빠른 조회를 위해 저장
+  const diaryDateSet = new Set(diaryDates);
 
   // 특정 날짜에 일기가 있는지 확인하는 함수
   const hasEntry = (date: Date) => {
-    return entriesByDate[date.toDateString()]?.length > 0;
-  };
-
-  // 특정 날짜의 일기 목록을 가져오는 함수
-  const getEntriesForDate = (date: Date) => {
-    return entriesByDate[date.toDateString()] || [];
+    const dateString = date.toISOString().split("T")[0]; // YYYY-MM-DD 형태로 변환
+    return diaryDateSet.has(dateString);
   };
 
   return (
@@ -117,37 +88,15 @@ export function DiaryCalendar({
               </h4>
             </div>
 
-            {(() => {
-              const dayEntries = getEntriesForDate(selectedDate);
-              if (dayEntries.length === 0) {
-                return (
-                  <p className='text-xs text-muted-foreground text-center'>
-                    이 날에 작성된 일기가 없습니다.
-                  </p>
-                );
-              }
-
-              return (
-                <div className='space-y-2'>
-                  <p className='text-xs text-muted-foreground text-center'>
-                    {dayEntries.length}개의 일기
-                  </p>
-                  <div className='flex flex-wrap justify-center gap-1'>
-                    {dayEntries.map(entry =>
-                      entry.emotionTags.slice(0, 3).map(tag => (
-                        <Badge
-                          key={`${entry.id}-${tag.id}`}
-                          style={{ backgroundColor: tag.color }}
-                          className='text-white text-xs h-5 px-2'
-                        >
-                          {tag.name}
-                        </Badge>
-                      ))
-                    )}
-                  </div>
-                </div>
-              );
-            })()}
+            {hasEntry(selectedDate) ? (
+              <p className='text-xs text-muted-foreground text-center'>
+                이 날에 작성된 일기가 있습니다.
+              </p>
+            ) : (
+              <p className='text-xs text-muted-foreground text-center'>
+                이 날에 작성된 일기가 없습니다.
+              </p>
+            )}
           </div>
         )}
       </CardContent>
